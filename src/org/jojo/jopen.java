@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public final class jopen implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
-        // TODO implement action body
+        JOpenDialog dialog = new JOpenDialog(null, true);
+        dialog.setVisible(true);
     }
 }
