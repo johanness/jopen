@@ -46,7 +46,7 @@ public class SearchData {
         int i = 0;
         while (i < fileList.size()) {
             FileEntry fileEntry = fileList.get(i);
-            if (fileEntry.getName().contains(query)) result.add(fileEntry);
+            if (fileEntry.getName().toLowerCase().contains(query.toLowerCase())) result.add(fileEntry);
             i++;
         }
         return result;
