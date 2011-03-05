@@ -3,8 +3,8 @@
 <filesystem>
     <folder name="Actions">
         <folder name="File">
-            <file name="org-jojo-jopen.instance">
-                <attr name="delegate" newvalue="org.jojo.jopen"/>
+            <file name="org-jojo-JOpen.instance">
+                <attr name="delegate" newvalue="org.jojo.JOpen"/>
                 <attr name="displayName" bundlevalue="org.jojo.Bundle#CTL_jopen"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" boolvalue="false"/>
@@ -14,7 +14,7 @@
     <folder name="Menu">
         <folder name="GoTo">
             <file name="org-jojo-jopen.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/org-jojo-jopen.instance"/>
+                <attr name="originalFile" stringvalue="Actions/File/org-jojo-JOpen.instance"/>
                 <attr name="position" intvalue="0"/>
             </file>
         </folder>

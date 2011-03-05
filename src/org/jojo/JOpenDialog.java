@@ -11,16 +11,28 @@
 
 package org.jojo;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author jojo
  */
 public class JOpenDialog extends javax.swing.JDialog {
 
+    private DefaultListModel resultListModel = new DefaultListModel();
+    private int MAX_DISPLAY_RESULTS = 20;
+
+
     /** Creates new form JOpenDialog */
     public JOpenDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        addCustomListeners();
     }
 
     /** This method is called from within the constructor to
@@ -97,5 +109,57 @@ public class JOpenDialog extends javax.swing.JDialog {
     private javax.swing.JList jResultList;
     private javax.swing.JScrollPane jResultPane;
     // End of variables declaration//GEN-END:variables
+
+    private void addCustomListeners() {
+        jQueryField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateResultList();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateResultList();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+        jQueryField.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // on cursor down
+                if (e.getKeyCode() == 40) {
+                    jResultList.requestFocus();
+                    jResultList.setSelectedIndex(0);
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+    }
+
+    private void updateResultList() {
+        resultListModel.clear();
+        String query = jQueryField.getText();
+        Iterator<FileEntry> resultListIterator = SearchData.getInstance().search(query).iterator();
+        int resultCount = 0;
+        while (resultCount < MAX_DISPLAY_RESULTS & resultListIterator.hasNext()) {
+            FileEntry fileEntry = resultListIterator.next();
+            resultListModel.add(resultListModel.size(), fileEntry.getName() + " - (" + fileEntry.getPath() + ")");
+            resultCount++;
+
+        }
+        jResultList.setModel(resultListModel);
+    }
 
 }
