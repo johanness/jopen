@@ -99,6 +99,11 @@ public class JOpenDialog extends javax.swing.JDialog {
 
     private void jResultListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jResultListKeyPressed
         switch (evt.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                if (jResultList.getSelectedIndex()==0) {
+                    jQueryField.requestFocus();
+                }
+                break;
             case KeyEvent.VK_ENTER:
                 openSelectedFile();
                 this.close();
