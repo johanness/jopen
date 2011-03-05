@@ -152,25 +152,6 @@ public class JOpenDialog extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
             }
         });
-        jQueryField.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // on cursor down
-                if (e.getKeyCode() == 40) {
-                    jResultList.requestFocus();
-                    jResultList.setSelectedIndex(0);
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
     }
 
     private void updateResultList() {
