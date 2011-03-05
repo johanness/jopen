@@ -10,15 +10,10 @@
  */
 package org.jojo;
 
-import java.awt.Container;
-import java.awt.Event;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.Iterator;
-import javax.swing.JDialog;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.openide.filesystems.FileObject;
@@ -100,33 +95,26 @@ public class JOpenDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jResultListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jResultListKeyPressed
-        if (evt.getKeyCode() == 10) {
-            try {
-                int selectedIndex = jResultList.getSelectedIndex();
-                String selectedPath = resultListModel.getPathFromElement(selectedIndex);
-                FileObject fo = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
-                DataObject newDo = DataObject.find(fo);
-                Node node = newDo.getNodeDelegate();
-                javax.swing.Action a = node.getPreferredAction();
-                if (a instanceof ContextAwareAction) {
-                    a = ((ContextAwareAction) a).createContextAwareInstance(node.getLookup());
-                }
-                if (a != null) {
-                    a.actionPerformed(new ActionEvent(node, ActionEvent.ACTION_PERFORMED, ""));
-                }
-
-            } catch (Exception ex) {
-                Exceptions.printStackTrace(ex);
-            }
-            this.dispose();
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+                openSelectedFile();
+                this.close();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                this.close();
+                break;
         }
     }//GEN-LAST:event_jResultListKeyPressed
 
     private void jQueryFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jQueryFieldKeyPressed
-        // on cursor down
-        if (evt.getKeyCode() == 40) {
-            jResultList.requestFocus();
-            jResultList.setSelectedIndex(0);
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_DOWN:
+                jResultList.requestFocus();
+                jResultList.setSelectedIndex(0);
+                break;
+            case KeyEvent.VK_ESCAPE:
+                this.close();
+                break;
         }
     }//GEN-LAST:event_jQueryFieldKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -173,5 +161,24 @@ public class JOpenDialog extends javax.swing.JDialog {
 
     private void moveToCenterOfScreen() {
         this.setLocationRelativeTo(null);
+    }
+
+    private void openSelectedFile() {
+        try {
+            int selectedIndex = jResultList.getSelectedIndex();
+            String selectedPath = resultListModel.getPathFromElement(selectedIndex);
+            FileObject fo = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
+            DataObject newDo = DataObject.find(fo);
+            Node node = newDo.getNodeDelegate();
+            javax.swing.Action a = node.getPreferredAction();
+            if (a instanceof ContextAwareAction) {
+                a = ((ContextAwareAction) a).createContextAwareInstance(node.getLookup());
+            }
+            if (a != null) {
+                a.actionPerformed(new ActionEvent(node, ActionEvent.ACTION_PERFORMED, ""));
+            }
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 }

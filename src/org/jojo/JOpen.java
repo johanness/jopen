@@ -14,6 +14,7 @@ import org.openide.filesystems.FileUtil;
 
 public final class JOpen implements ActionListener {
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SearchData.getInstance().setRootFolder(rootFolder());
         JOpenDialog dialog = new JOpenDialog(null, true);
