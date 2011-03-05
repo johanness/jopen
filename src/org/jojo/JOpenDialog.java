@@ -31,6 +31,7 @@ public class JOpenDialog extends javax.swing.JDialog {
 
     private JOpenDefaultListModel resultListModel = new JOpenDefaultListModel();
     private int MAX_DISPLAY_RESULTS = 40;
+    private int MAX_DISPLAY_FILENAME_LENGTH = 25;
 
     /** Creates new form JOpenDialog */
     public JOpenDialog(java.awt.Frame parent, boolean modal) {
@@ -38,6 +39,7 @@ public class JOpenDialog extends javax.swing.JDialog {
         initComponents();
         addCustomListeners();
         moveToCenterOfScreen();
+        setCellRenderer();
     }
 
     /** This method is called from within the constructor to
@@ -63,6 +65,7 @@ public class JOpenDialog extends javax.swing.JDialog {
             }
         });
 
+        jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12)); // NOI18N
         jResultList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jResultListKeyPressed(evt);
@@ -77,8 +80,8 @@ public class JOpenDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jResultPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
-                    .addComponent(jQueryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
+                    .addComponent(jResultPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+                    .addComponent(jQueryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,7 +90,7 @@ public class JOpenDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jQueryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -149,7 +152,15 @@ public class JOpenDialog extends javax.swing.JDialog {
         int resultCount = 0;
         while (resultCount < MAX_DISPLAY_RESULTS & resultListIterator.hasNext()) {
             FileEntry fileEntry = resultListIterator.next();
-            resultListModel.add(resultListModel.size(), fileEntry.getName() + " - (" + fileEntry.getPath() + ")");
+            String listEntry = fileEntry.getName();
+            if (listEntry.length() > MAX_DISPLAY_FILENAME_LENGTH) {
+                listEntry = listEntry.substring(0, MAX_DISPLAY_FILENAME_LENGTH);
+            }
+            while (listEntry.length() < MAX_DISPLAY_FILENAME_LENGTH) {
+                listEntry = listEntry.concat(" ");
+            }
+            listEntry = listEntry.concat(" (").concat(fileEntry.getPath()).concat(")");
+            resultListModel.add(resultListModel.size(), listEntry);
             resultCount++;
         }
         jResultList.setModel(resultListModel);
@@ -180,5 +191,9 @@ public class JOpenDialog extends javax.swing.JDialog {
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
+    }
+
+    private void setCellRenderer() {
+        jResultList.setCellRenderer(new ResultListCellRenderer());
     }
 }
