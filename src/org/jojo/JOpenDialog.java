@@ -164,7 +164,8 @@ public class JOpenDialog extends javax.swing.JDialog {
             while (listEntry.length() < MAX_DISPLAY_FILENAME_LENGTH) {
                 listEntry = listEntry.concat(" ");
             }
-            listEntry = listEntry.concat(" (").concat(fileEntry.getPath()).concat(")");
+            String relativeFilePath = fileEntry.getPath().replace(SearchData.getInstance().getRootFolder().getAbsolutePath(), "");
+            listEntry = listEntry.concat(" (").concat(relativeFilePath).concat(")");
             resultListModel.add(resultListModel.size(), listEntry);
             resultCount++;
         }
