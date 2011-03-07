@@ -166,7 +166,7 @@ public class JOpenDialog extends javax.swing.JDialog {
             }
             String relativeFilePath = fileEntry.getPath().replace(SearchData.getInstance().getRootFolder().getAbsolutePath(), "");
             listEntry = listEntry.concat(" (").concat(relativeFilePath).concat(")");
-            resultListModel.add(resultListModel.size(), listEntry);
+            resultListModel.add(0, listEntry);
             resultCount++;
         }
         jResultList.setModel(resultListModel);
