@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jojo;
 
 import javax.swing.DefaultListModel;
@@ -18,5 +17,9 @@ public class JOpenDefaultListModel extends DefaultListModel {
         result = result.replaceFirst("^.*\\(", "");
         result = result.replaceFirst("\\)$", "");
         return SearchData.getInstance().getRootFolder().getAbsolutePath().concat(result);
+    }
+
+    public int getIndexOfLastElement() {
+        return this.getSize() - 1;
     }
 }

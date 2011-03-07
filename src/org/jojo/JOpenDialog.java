@@ -66,6 +66,7 @@ public class JOpenDialog extends javax.swing.JDialog {
         });
 
         jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12)); // NOI18N
+        jResultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jResultList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jResultListKeyPressed(evt);
@@ -80,8 +81,8 @@ public class JOpenDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jResultPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
-                    .addComponent(jQueryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+                    .addComponent(jResultPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                    .addComponent(jQueryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -90,7 +91,7 @@ public class JOpenDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jQueryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -101,6 +102,11 @@ public class JOpenDialog extends javax.swing.JDialog {
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_UP:
                 if (jResultList.getSelectedIndex()==0) {
+                    jQueryField.requestFocus();
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                if (jResultList.getSelectedIndex()==resultListModel.getIndexOfLastElement()) {
                     jQueryField.requestFocus();
                 }
                 break;
@@ -119,6 +125,12 @@ public class JOpenDialog extends javax.swing.JDialog {
             case KeyEvent.VK_DOWN:
                 jResultList.requestFocus();
                 jResultList.setSelectedIndex(0);
+                jResultPane.getVerticalScrollBar().setValue(0);
+                break;
+            case KeyEvent.VK_UP:
+                jResultList.requestFocus();
+                jResultList.setSelectedIndex(resultListModel.getIndexOfLastElement());
+                jResultList.ensureIndexIsVisible(resultListModel.getIndexOfLastElement());
                 break;
             case KeyEvent.VK_ESCAPE:
                 this.close();
