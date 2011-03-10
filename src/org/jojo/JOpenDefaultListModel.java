@@ -16,7 +16,7 @@ public class JOpenDefaultListModel extends DefaultListModel {
         String result = this.get(index).toString();
         result = result.replaceFirst("^.*\\(", "");
         result = result.replaceFirst("\\)$", "");
-        return SearchData.getInstance().getRootFolder().getAbsolutePath().concat(result);
+        return SearchData.getInstance().getRootFolderPath().concat(result);
     }
 
     public int getIndexOfLastElement() {
