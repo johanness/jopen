@@ -101,6 +101,7 @@ public class SearchData {
         query = query.toLowerCase();
         ArrayList<FileEntry> hits = new ArrayList<FileEntry>();
         ArrayList<FileEntry> matches = new ArrayList<FileEntry>();
+        ArrayList<FileEntry> results = new ArrayList<FileEntry>();
         int i = 0;
         while (i < fileList.size()) {
             FileEntry fileEntry = fileList.get(i);
@@ -113,9 +114,12 @@ public class SearchData {
             }
             i++;
         }
-        for (Iterator<FileEntry> it = matches.iterator(); it.hasNext();) {
-            hits.add(it.next());
+        for (Iterator<FileEntry> it = hits.iterator(); it.hasNext();) {
+            results.add(it.next());
         }
-        return hits;
+        for (Iterator<FileEntry> it = matches.iterator(); it.hasNext();) {
+            results.add(it.next());
+        }
+        return results;
     }
 }

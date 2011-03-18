@@ -49,6 +49,7 @@ public class SearchDataTest {
             assertTrue(file.isFile());
         }
         SearchData.getInstance().setRootFolder(new File(temporaryDirectoryPath));
+        assertEquals(temporaryDirectoryPath, SearchData.getInstance().getRootFolderPath());
     }
 
     @AfterClass
@@ -65,7 +66,6 @@ public class SearchDataTest {
 
     @Test
     public void testBasicSearch() {
-        assertEquals(temporaryDirectoryPath, SearchData.getInstance().getRootFolderPath());
         ArrayList<FileEntry> resultList = SearchData.getInstance().search("1");
         assertEquals(3, resultList.size());
         for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
@@ -76,5 +76,23 @@ public class SearchDataTest {
                     || fileEntry.getName().equals("file_134.tmp"));
             assertFalse(fileEntry.getName().equals("file_234.tmp"));
         }
+    }
+
+    @Test
+    public void testDirectorySearch() {
+        ArrayList<FileEntry> resultList = SearchData.getInstance().search(" f");
+        assertEquals(3, resultList.size());
+        for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
+            FileEntry fileEntry = it.next();
+            assertTrue(
+                    fileEntry.getName().equals("file_124.tmp")
+                    || fileEntry.getName().equals("file_134.tmp")
+                    || fileEntry.getName().equals("file_234.tmp"));
+            assertFalse(fileEntry.getName().equals("file_123.tmp"));
+        }
+
+        resultList = SearchData.getInstance().search(" f f");
+        assertEquals(1, resultList.size());
+        assertTrue(resultList.get(0).getName().equals("file_234.tmp"));
     }
 }
