@@ -44,8 +44,10 @@ public class SearchData {
     }
 
     public void setRootFolder(File rootFolder) {
-        this.rootFolder = rootFolder;
-        this.rootFolderPath = rootFolder.getAbsolutePath();
+        if (rootFolder != null) {
+            this.rootFolder = rootFolder;
+            this.rootFolderPath = rootFolder.getAbsolutePath();
+        }
     }
 
     public ArrayList<FileEntry> search(String query) {
@@ -105,11 +107,10 @@ public class SearchData {
         int i = 0;
         while (i < fileList.size()) {
             FileEntry fileEntry = fileList.get(i);
-            System.out.println("|"+fileEntry.getDirectoryShortcut()+"|"+query.toLowerCase()+"|"+fileEntry.getDirectoryShortcut().compareTo(query.toLowerCase()));
-            if (fileEntry.getDirectoryShortcut().compareTo(query)==0) {
+            System.out.println("|" + fileEntry.getDirectoryShortcut() + "|" + query.toLowerCase() + "|" + fileEntry.getDirectoryShortcut().compareTo(query.toLowerCase()));
+            if (fileEntry.getDirectoryShortcut().compareTo(query) == 0) {
                 hits.add(fileEntry);
-            }
-            else if (fileEntry.getDirectoryShortcut().startsWith(query)) {
+            } else if (fileEntry.getDirectoryShortcut().startsWith(query)) {
                 matches.add(fileEntry);
             }
             i++;

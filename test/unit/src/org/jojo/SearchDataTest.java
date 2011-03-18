@@ -95,4 +95,14 @@ public class SearchDataTest {
         assertEquals(1, resultList.size());
         assertTrue(resultList.get(0).getName().equals("file_234.tmp"));
     }
+
+    @Test
+    public void testSetRootFolder() {
+        try {
+            SearchData.getInstance().setRootFolder(null);
+        } catch (NullPointerException ex) {
+            fail("setRootFolder method should work when no file is passed");
+        }
+
+    }
 }
