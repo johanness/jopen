@@ -6,6 +6,7 @@ package org.jojo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -31,6 +32,7 @@ public class SearchData {
             fileList.clear();
             currentRootFolder = rootFolder;
             addFolder(currentRootFolder);
+            Collections.sort(fileList);
         }
         return instance;
     }
@@ -101,25 +103,14 @@ public class SearchData {
 
     private ArrayList<FileEntry> directorySearch(String query) {
         query = query.toLowerCase();
-        ArrayList<FileEntry> hits = new ArrayList<FileEntry>();
-        ArrayList<FileEntry> matches = new ArrayList<FileEntry>();
         ArrayList<FileEntry> results = new ArrayList<FileEntry>();
         int i = 0;
         while (i < fileList.size()) {
             FileEntry fileEntry = fileList.get(i);
-            System.out.println("|" + fileEntry.getDirectoryShortcut() + "|" + query.toLowerCase() + "|" + fileEntry.getDirectoryShortcut().compareTo(query.toLowerCase()));
-            if (fileEntry.getDirectoryShortcut().compareTo(query) == 0) {
-                hits.add(fileEntry);
-            } else if (fileEntry.getDirectoryShortcut().startsWith(query)) {
-                matches.add(fileEntry);
+            if (fileEntry.getDirectoryShortcut().startsWith(query)) {
+                results.add(fileEntry);
             }
             i++;
-        }
-        for (Iterator<FileEntry> it = hits.iterator(); it.hasNext();) {
-            results.add(it.next());
-        }
-        for (Iterator<FileEntry> it = matches.iterator(); it.hasNext();) {
-            results.add(it.next());
         }
         return results;
     }

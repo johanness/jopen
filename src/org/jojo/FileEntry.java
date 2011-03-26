@@ -8,7 +8,7 @@ package org.jojo;
  *
  * @author jojo
  */
-public class FileEntry {
+public class FileEntry implements Comparable{
 
     public FileEntry(String name, String path, String directoryShortcut) {
         this.name = name;
@@ -42,5 +42,10 @@ public class FileEntry {
 
     public void setDirectoryShortcut(String directoryShortcut) {
         this.directoryShortcut = directoryShortcut;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.directoryShortcut.compareTo(((FileEntry)o).directoryShortcut);
     }
 }
