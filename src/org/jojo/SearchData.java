@@ -7,7 +7,6 @@ package org.jojo;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 /**
  *
@@ -79,11 +78,16 @@ public class SearchData {
         String relativePath = file.getAbsolutePath().replace(rootFolderPath, "");
         String folders[] = relativePath.split("/");
         String result = "";
-        for (int i = 1; i < folders.length - 1; i++) {
+        for (int i = 1; i < folders.length; i++) {
             if (i > 1) {
                 result += " ";
             }
-            result += folders[i].toLowerCase().substring(0, 1);
+            if (i == (folders.length - 1)) {
+                result += folders[i].toLowerCase();
+            } else {
+                result += folders[i].toLowerCase().substring(0, 1);
+
+            }
         }
         return result;
     }

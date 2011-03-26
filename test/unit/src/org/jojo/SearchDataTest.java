@@ -80,7 +80,7 @@ public class SearchDataTest {
 
     @Test
     public void testDirectorySearch() {
-        ArrayList<FileEntry> resultList = SearchData.getInstance().search(" f");
+        ArrayList<FileEntry> resultList = SearchData.getInstance().search(" f f");
         assertEquals(3, resultList.size());
         for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
@@ -91,9 +91,13 @@ public class SearchDataTest {
             assertFalse(fileEntry.getName().equals("file_123.tmp"));
         }
 
-        resultList = SearchData.getInstance().search(" f f");
+        resultList = SearchData.getInstance().search(" f f f");
         assertEquals(1, resultList.size());
         assertTrue(resultList.get(0).getName().equals("file_234.tmp"));
+
+        resultList = SearchData.getInstance().search(" f file_12");
+        assertEquals(1, resultList.size());
+        assertTrue(resultList.get(0).getName().equals("file_124.tmp"));
     }
 
     @Test
