@@ -13,6 +13,7 @@ package org.jojo;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -165,7 +166,9 @@ public class JOpenDialog extends javax.swing.JDialog {
     private void updateResultList() {
         resultListModel.clear();
         String query = jQueryField.getText();
-        Iterator<FileEntry> resultListIterator = SearchData.getInstance().search(query).iterator();
+        ArrayList<FileEntry> searchResults = SearchData.getInstance().search(query);
+        Iterator<FileEntry> resultListIterator = searchResults.iterator();
+        this.setTitle("Found "+searchResults.size());
         int resultCount = 0;
         while (resultCount < MAX_DISPLAY_RESULTS & resultListIterator.hasNext()) {
             FileEntry fileEntry = resultListIterator.next();
