@@ -82,7 +82,9 @@
                     </test-dependency>
                 </test-type>
             </test-dependencies>
-            <public-packages/>
+            <public-packages>
+                <package>org.jojo</package>
+            </public-packages>
         </data>
     </configuration>
 </project>

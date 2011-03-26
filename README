@@ -1,0 +1,23 @@
+ABOUT
+
+jopen is a small Netbeans plugin to search and open files fast.
+It presents the search results as you type and has a simple directory search.
+
+
+INSTALLATION
+
+Use the following Netbeans module file:
+/build/org-jojo.nbm
+I use it for Netbeans 6.9.1
+
+
+USAGE
+
+I recommend to set up a shortcut (i use ALT+O).
+jopen will search only in your "main project", so you will have to set one.
+
+Just enter the filename you are looking for to start a search.
+
+To use the directory search start with a whitespace and then add the initial letters
+of the folders followed by the filename:
+" p t y fil" will find "/path/to/youre/file.tmp"

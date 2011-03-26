@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jojo;
 
 import java.awt.Color;
@@ -10,10 +6,6 @@ import java.awt.Font;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-/**
- *
- * @author jojo
- */
 public class ResultListCellRenderer extends DefaultListCellRenderer {
 
     private Color lightGray = new Color(240, 240, 240);

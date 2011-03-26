@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jojo;
 
 import java.io.File;
@@ -12,10 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author jojo
- */
 public class SearchDataTest {
 
     static String temporaryDirectoryPath = "/tmp/jopen";

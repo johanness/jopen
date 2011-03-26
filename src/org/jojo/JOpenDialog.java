@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * JOpenDialog.java
- *
- * Created on 10.02.2011, 19:31:13
- */
 package org.jojo;
 
 import java.awt.event.ActionEvent;
@@ -24,10 +14,6 @@ import org.openide.nodes.Node;
 import org.openide.util.ContextAwareAction;
 import org.openide.util.Exceptions;
 
-/**
- *
- * @author jojo
- */
 public class JOpenDialog extends javax.swing.JDialog {
 
     private JOpenDefaultListModel resultListModel = new JOpenDefaultListModel();
@@ -102,12 +88,12 @@ public class JOpenDialog extends javax.swing.JDialog {
     private void jResultListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jResultListKeyPressed
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_UP:
-                if (jResultList.getSelectedIndex()==0) {
+                if (jResultList.getSelectedIndex() == 0) {
                     jQueryField.requestFocus();
                 }
                 break;
             case KeyEvent.VK_DOWN:
-                if (jResultList.getSelectedIndex()==resultListModel.getIndexOfLastElement()) {
+                if (jResultList.getSelectedIndex() == resultListModel.getIndexOfLastElement()) {
                     jQueryField.requestFocus();
                 }
                 break;
@@ -168,7 +154,7 @@ public class JOpenDialog extends javax.swing.JDialog {
         String query = jQueryField.getText();
         ArrayList<FileEntry> searchResults = SearchData.getInstance().search(query);
         Iterator<FileEntry> resultListIterator = searchResults.iterator();
-        this.setTitle("Found "+searchResults.size());
+        this.setTitle("Found " + searchResults.size());
         int resultCount = 0;
         while (resultCount < MAX_DISPLAY_RESULTS & resultListIterator.hasNext()) {
             FileEntry fileEntry = resultListIterator.next();

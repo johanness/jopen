@@ -1,14 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jojo;
 
-/**
- *
- * @author jojo
- */
-public class FileEntry implements Comparable{
+public class FileEntry implements Comparable {
 
     public FileEntry(String name, String path, String directoryShortcut) {
         this.name = name;
@@ -45,6 +37,6 @@ public class FileEntry implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return this.directoryShortcut.compareTo(((FileEntry)o).directoryShortcut);
+        return this.directoryShortcut.compareTo(((FileEntry) o).directoryShortcut);
     }
 }

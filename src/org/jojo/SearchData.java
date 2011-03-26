@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jojo;
 
 import java.io.File;
@@ -9,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-/**
- *
- * @author jojo
- */
 public class SearchData {
 
     private static SearchData instance = null;
