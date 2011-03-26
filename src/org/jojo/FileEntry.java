@@ -14,7 +14,6 @@ public class FileEntry implements Comparable{
         this.name = name;
         this.path = path;
         this.directoryShortcut = directoryShortcut;
-        System.out.println(path+" "+directoryShortcut);
     }
     private String name;
     private String path;
