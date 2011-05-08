@@ -1,7 +1,9 @@
 package org.jojo;
 
+import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -145,6 +147,23 @@ public class JOpenDialog extends javax.swing.JDialog {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+            }
+        });
+        jQueryField.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R && e.getModifiers() == Event.CTRL_MASK) {
+                    SearchData.getInstance().reload();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
     }

@@ -1,12 +1,14 @@
 package org.jojo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.openide.util.Exceptions;
 
 public class SearchDataTest {
 
@@ -100,5 +102,33 @@ public class SearchDataTest {
             fail("setRootFolder method should work when no file is passed");
         }
 
+    }
+
+    @Test
+    public void testReloadGetsAllNewFilesInTheSearchDirectory() {
+        // setup
+        File new_file = new File(temporaryDirectoryPath.concat("/new_file.tmp"));
+        if (new_file.exists()) {
+            new_file.delete();
+        }
+        assertFalse(new_file.exists());
+        SearchData instance = SearchData.getInstance();
+
+        // search for a file that does not exist yet
+        assertTrue(instance.search("new_file.tmp").isEmpty());
+
+        // new file is created but cannot be found yet
+        try {
+            assertTrue(new_file.createNewFile());
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        assertTrue(instance.search("new_file.tmp").isEmpty());
+
+        // after reloading the index the file can be found
+        instance.reload();
+        ArrayList<FileEntry> resultList = instance.search("new_file.tmp");
+        assertEquals(1, resultList.size());
+        assertEquals(new_file.getAbsolutePath(), resultList.get(0).getPath());
     }
 }

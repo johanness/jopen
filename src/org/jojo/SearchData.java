@@ -21,18 +21,7 @@ public class SearchData {
             instance = new SearchData();
         }
         if (rootFolder != currentRootFolder) {
-            fileList.clear();
-            currentRootFolder = rootFolder;
-            Date beforeAddFolder = new Date();
-            addFolder(currentRootFolder);
-            Date afterAddFolder = new Date();
-            Collections.sort(fileList);
-            Date afterSort = new Date();
-            System.out.println("------------------");
-            System.out.println("loaded files: "+fileList.size());
-            System.out.println("file load   : "+(afterAddFolder.getTime()-beforeAddFolder.getTime())+"ms");
-            System.out.println("file sort   : "+(afterSort.getTime()-afterAddFolder.getTime())+"ms");
-            System.out.println("------------------");
+            instance.reload();
         }
         return instance;
     }
@@ -118,5 +107,20 @@ public class SearchData {
             i++;
         }
         return results;
+    }
+
+    public void reload() {
+        fileList.clear();
+        currentRootFolder = rootFolder;
+        Date beforeAddFolder = new Date();
+        addFolder(currentRootFolder);
+        Date afterAddFolder = new Date();
+        Collections.sort(fileList);
+        Date afterSort = new Date();
+        System.out.println("------------------");
+        System.out.println("loaded files: " + fileList.size());
+        System.out.println("file load   : " + (afterAddFolder.getTime() - beforeAddFolder.getTime()) + "ms");
+        System.out.println("file sort   : " + (afterSort.getTime() - afterAddFolder.getTime()) + "ms");
+        System.out.println("------------------");
     }
 }
