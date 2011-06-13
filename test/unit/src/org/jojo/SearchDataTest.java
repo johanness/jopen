@@ -43,7 +43,6 @@ public class SearchDataTest {
             assertTrue(file.isFile());
         }
         SearchData.getInstance().setRootFolder(new File(temporaryDirectoryPath));
-        assertEquals(temporaryDirectoryPath, SearchData.getInstance().getRootFolderPath());
     }
 
     @AfterClass
@@ -56,6 +55,11 @@ public class SearchDataTest {
             File file = it.next();
             file.delete();
         }
+    }
+
+    @Test
+    public void testRootFolderPathIsSaved() {
+        assertEquals(temporaryDirectoryPath, SearchData.getInstance().getRootFolderPath());
     }
 
     @Test
@@ -95,6 +99,21 @@ public class SearchDataTest {
     }
 
     @Test
+    public void testRegexSearch() {
+        ArrayList<FileEntry> resultList = SearchData.getInstance().search("%fe14.mp");
+        assertEquals(2, resultList.size());
+        for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
+            FileEntry fileEntry = it.next();
+            assertTrue(
+                    fileEntry.getName().equals("file_124.tmp")
+                    || fileEntry.getName().equals("file_134.tmp"));
+            assertFalse(
+                    fileEntry.getName().equals("file_123.tmp")
+                    || fileEntry.getName().equals("file_234.tmp"));
+        }
+    }
+
+    @Test
     public void testSetRootFolder() {
         try {
             SearchData.getInstance().setRootFolder(null);
@@ -113,6 +132,7 @@ public class SearchDataTest {
         }
         assertFalse(new_file.exists());
         SearchData instance = SearchData.getInstance();
+        instance.reload();
 
         // search for a file that does not exist yet
         assertTrue(instance.search("new_file.tmp").isEmpty());

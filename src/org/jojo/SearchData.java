@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 
 public class SearchData {
 
@@ -44,9 +45,18 @@ public class SearchData {
     public ArrayList<FileEntry> search(String query) {
         if (query.contains(" ")) {
             return directorySearch(query.substring(1));
+        } else if (query.startsWith("%")) {
+            return regexSearch(query);
         } else {
             return simpleSearch(query);
         }
+    }
+
+    public void reload() {
+        fileList.clear();
+        currentRootFolder = rootFolder;
+        addFolder(currentRootFolder);
+        Collections.sort(fileList);
     }
 
     private static void addFolder(File folder) {
@@ -109,18 +119,21 @@ public class SearchData {
         return results;
     }
 
-    public void reload() {
-        fileList.clear();
-        currentRootFolder = rootFolder;
-        Date beforeAddFolder = new Date();
-        addFolder(currentRootFolder);
-        Date afterAddFolder = new Date();
-        Collections.sort(fileList);
-        Date afterSort = new Date();
-        System.out.println("------------------");
-        System.out.println("loaded files: " + fileList.size());
-        System.out.println("file load   : " + (afterAddFolder.getTime() - beforeAddFolder.getTime()) + "ms");
-        System.out.println("file sort   : " + (afterSort.getTime() - afterAddFolder.getTime()) + "ms");
-        System.out.println("------------------");
+    private ArrayList<FileEntry> regexSearch(String query) {
+        String regex = "";
+        for (int i = 1; i < query.length(); i++) {
+            regex += ".*" + query.charAt(i);
+        }
+        regex += ".*";
+        ArrayList<FileEntry> results = new ArrayList<FileEntry>();
+        int i = 0;
+        while (i < fileList.size()) {
+            FileEntry fileEntry = fileList.get(i);
+            if (fileEntry.getPath().matches(regex)) {
+                results.add(fileEntry);
+            }
+            i++;
+        }
+        return results;
     }
 }
