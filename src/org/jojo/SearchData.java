@@ -44,7 +44,7 @@ public class SearchData {
 
     public ArrayList<FileEntry> search(String query) {
         if (query.contains(" ")) {
-            return directorySearch(query.substring(1));
+            return directorySearch(query);
         } else if (query.startsWith("%")) {
             return regexSearch(query);
         } else {
@@ -107,6 +107,7 @@ public class SearchData {
 
     private ArrayList<FileEntry> directorySearch(String query) {
         query = query.toLowerCase();
+        if (query.startsWith(" ")) query = query.substring(1);
         ArrayList<FileEntry> results = new ArrayList<FileEntry>();
         int i = 0;
         while (i < fileList.size()) {

@@ -18,9 +18,9 @@ jopen will search only in your "main project", so you will have to set one.
 
 Just enter the filename you are looking for to start a search.
 
-To use the directory search start with a whitespace and then add the initial letters
-of the folders followed by the filename:
-" p t y fil" will find "/path/to/your/file.tmp"
+To use the directory enter the the initial letters of the folders seperated
+with a whitespace followed by the filename:
+"p t y fil" will find "/path/to/your/file.tmp"
 
 To use the regex search start with '%':
 "%ptyile.mp" will find "/path/to/your/file.tmp"
