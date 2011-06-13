@@ -4,6 +4,8 @@ import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -101,7 +103,6 @@ public class JOpenDialog extends javax.swing.JDialog {
                 break;
             case KeyEvent.VK_ENTER:
                 openSelectedFile();
-                this.close();
                 break;
             case KeyEvent.VK_ESCAPE:
                 this.close();
@@ -166,6 +167,31 @@ public class JOpenDialog extends javax.swing.JDialog {
             public void keyReleased(KeyEvent e) {
             }
         });
+        jResultList.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    openSelectedFile();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+            }
+        });
     }
 
     private void updateResultList() {
@@ -214,6 +240,7 @@ public class JOpenDialog extends javax.swing.JDialog {
             if (a != null) {
                 a.actionPerformed(new ActionEvent(node, ActionEvent.ACTION_PERFORMED, ""));
             }
+            this.close();
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
