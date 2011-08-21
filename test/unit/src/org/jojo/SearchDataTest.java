@@ -1,9 +1,12 @@
 package org.jojo;
 
+import org.jojo.search.SearchData;
+import org.jojo.search.FileEntry;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.jojo.search.SearchService;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -64,7 +67,7 @@ public class SearchDataTest {
 
     @Test
     public void testBasicSearch() {
-        ArrayList<FileEntry> resultList = SearchData.getInstance().search("1");
+        ArrayList<FileEntry> resultList = SearchService.getInstance().search("1");
         assertEquals(3, resultList.size());
         for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
@@ -78,7 +81,7 @@ public class SearchDataTest {
 
     @Test
     public void testDirectorySearch() {
-        ArrayList<FileEntry> resultList = SearchData.getInstance().search("f f");
+        ArrayList<FileEntry> resultList = SearchService.getInstance().search("f f");
         assertEquals(3, resultList.size());
         for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
@@ -89,18 +92,18 @@ public class SearchDataTest {
             assertFalse(fileEntry.getName().equals("file_123.tmp"));
         }
 
-        resultList = SearchData.getInstance().search("f f f");
+        resultList = SearchService.getInstance().search("f f f");
         assertEquals(1, resultList.size());
         assertTrue(resultList.get(0).getName().equals("file_234.tmp"));
 
-        resultList = SearchData.getInstance().search("f file_12");
+        resultList = SearchService.getInstance().search("f file_12");
         assertEquals(1, resultList.size());
         assertTrue(resultList.get(0).getName().equals("file_124.tmp"));
     }
 
     @Test
     public void testRegexSearch() {
-        ArrayList<FileEntry> resultList = SearchData.getInstance().search("%fe14.mp");
+        ArrayList<FileEntry> resultList = SearchService.getInstance().search("%fe14.mp");
         assertEquals(2, resultList.size());
         for (Iterator<FileEntry> it = resultList.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
@@ -131,8 +134,9 @@ public class SearchDataTest {
             new_file.delete();
         }
         assertFalse(new_file.exists());
-        SearchData instance = SearchData.getInstance();
-        instance.reload();
+        
+        SearchData.getInstance().reload();
+        SearchService instance = SearchService.getInstance();
 
         // search for a file that does not exist yet
         assertTrue(instance.search("new_file.tmp").isEmpty());
@@ -146,7 +150,7 @@ public class SearchDataTest {
         assertTrue(instance.search("new_file.tmp").isEmpty());
 
         // after reloading the index the file can be found
-        instance.reload();
+        SearchData.getInstance().reload();
         ArrayList<FileEntry> resultList = instance.search("new_file.tmp");
         assertEquals(1, resultList.size());
         assertEquals(new_file.getAbsolutePath(), resultList.get(0).getPath());

@@ -1,5 +1,6 @@
 package org.jojo;
 
+import org.jojo.search.SearchData;
 import javax.swing.DefaultListModel;
 
 public class JOpenDefaultListModel extends DefaultListModel {

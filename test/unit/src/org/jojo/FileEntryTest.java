@@ -1,5 +1,6 @@
 package org.jojo;
 
+import org.jojo.search.FileEntry;
 import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;

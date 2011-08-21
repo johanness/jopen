@@ -1,5 +1,6 @@
 package org.jojo;
 
+import org.jojo.search.SearchData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

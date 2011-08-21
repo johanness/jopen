@@ -1,5 +1,7 @@
 package org.jojo;
 
+import org.jojo.search.SearchData;
+import org.jojo.search.FileEntry;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.jojo.search.SearchService;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
@@ -197,7 +200,7 @@ public class JOpenDialog extends javax.swing.JDialog {
     private void updateResultList() {
         resultListModel.clear();
         String query = jQueryField.getText();
-        ArrayList<FileEntry> searchResults = SearchData.getInstance().search(query);
+        ArrayList<FileEntry> searchResults = SearchService.getInstance().search(query);
         Iterator<FileEntry> resultListIterator = searchResults.iterator();
         this.setTitle("Found " + searchResults.size());
         int resultCount = 0;

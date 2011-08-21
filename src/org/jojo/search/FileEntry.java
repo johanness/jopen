@@ -1,4 +1,4 @@
-package org.jojo;
+package org.jojo.search;
 
 import java.io.File;
 
