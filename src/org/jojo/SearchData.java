@@ -63,31 +63,13 @@ public class SearchData {
             for (int i = 0; i < files.length; i++) {
                 File file = files[i];
                 if (file.isFile()) {
-                    fileList.add(new FileEntry(file.getName(), file.getAbsolutePath(), getDirectoryShortcut(file)));
+                    fileList.add(new FileEntry(file, getRootFolderPath()));
                 }
                 if (file.isDirectory()) {
                     addFolder(file);
                 }
             }
         }
-    }
-
-    private String getDirectoryShortcut(File file) {
-        String relativePath = file.getAbsolutePath().replace(getRootFolderPath(), "");
-        String folders[] = relativePath.split("/");
-        String result = "";
-        for (int i = 1; i < folders.length; i++) {
-            if (i > 1) {
-                result += " ";
-            }
-            if (i == (folders.length - 1)) {
-                result += folders[i].toLowerCase();
-            } else {
-                result += folders[i].toLowerCase().substring(0, 1);
-
-            }
-        }
-        return result;
     }
 
     private ArrayList<FileEntry> simpleSearch(String query) {

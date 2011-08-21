@@ -1,11 +1,13 @@
 package org.jojo;
 
+import java.io.File;
+
 public class FileEntry implements Comparable {
 
-    public FileEntry(String name, String path, String directoryShortcut) {
-        this.name = name;
-        this.path = path;
-        this.directoryShortcut = directoryShortcut;
+    public FileEntry(File file, String absolutePrefix) {
+        this.name = file.getName();
+        this.path = file.getAbsolutePath();
+        this.directoryShortcut = getDirectoryShortcut(file, absolutePrefix);
     }
     private String name;
     private String path;
@@ -23,20 +25,25 @@ public class FileEntry implements Comparable {
         return directoryShortcut;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setDirectoryShortcut(String directoryShortcut) {
-        this.directoryShortcut = directoryShortcut;
-    }
-
     @Override
     public int compareTo(Object o) {
         return this.directoryShortcut.compareTo(((FileEntry) o).directoryShortcut);
+    }
+
+    private String getDirectoryShortcut(File file, String absolutePrefix) {
+        String relativePath = file.getAbsolutePath().replace(absolutePrefix, "");
+        String folders[] = relativePath.split("/");
+        String result = "";
+        for (int i = 1; i < folders.length; i++) {
+            if (i > 1) {
+                result += " ";
+            }
+            if (i == (folders.length - 1)) {
+                result += folders[i].toLowerCase();
+            } else {
+                result += folders[i].toLowerCase().substring(0, 1);
+            }
+        }
+        return result;
     }
 }
