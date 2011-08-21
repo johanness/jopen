@@ -9,10 +9,9 @@ import java.util.Iterator;
 public class SearchData {
 
     private static SearchData instance = null;
-    private static ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
-    private static File rootFolder = null;
-    private static String rootFolderPath = null;
-    private static File currentRootFolder = null;
+    private ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
+    private File rootFolder = null;
+    private File currentRootFolder = null;
 
     private SearchData() {
     }
@@ -21,7 +20,7 @@ public class SearchData {
         if (instance == null) {
             instance = new SearchData();
         }
-        if (rootFolder != currentRootFolder) {
+        if (instance.isRootFolderUpToDate()) {
             instance.reload();
         }
         return instance;
@@ -32,13 +31,12 @@ public class SearchData {
     }
 
     public String getRootFolderPath() {
-        return this.rootFolderPath;
+        return rootFolder.getAbsolutePath();
     }
 
     public void setRootFolder(File rootFolder) {
         if (rootFolder != null) {
             this.rootFolder = rootFolder;
-            this.rootFolderPath = rootFolder.getAbsolutePath();
         }
     }
 
@@ -59,7 +57,7 @@ public class SearchData {
         Collections.sort(fileList);
     }
 
-    private static void addFolder(File folder) {
+    private void addFolder(File folder) {
         if (folder.isDirectory()) {
             File files[] = folder.listFiles();
             for (int i = 0; i < files.length; i++) {
@@ -74,8 +72,8 @@ public class SearchData {
         }
     }
 
-    private static String getDirectoryShortcut(File file) {
-        String relativePath = file.getAbsolutePath().replace(rootFolderPath, "");
+    private String getDirectoryShortcut(File file) {
+        String relativePath = file.getAbsolutePath().replace(getRootFolderPath(), "");
         String folders[] = relativePath.split("/");
         String result = "";
         for (int i = 1; i < folders.length; i++) {
@@ -136,5 +134,9 @@ public class SearchData {
             i++;
         }
         return results;
+    }
+
+    private boolean isRootFolderUpToDate() {
+        return rootFolder != currentRootFolder;
     }
 }
