@@ -1,12 +1,11 @@
-package org.jojo;
+package org.jojo.search;
 
-import org.jojo.search.FileEntry;
 import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FileEntryTest {
-    
+
     public FileEntryTest() {
     }
 
@@ -16,7 +15,12 @@ public class FileEntryTest {
         assertTrue(fileEntry.getName().equals("filename"));
         assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));
         assertTrue(fileEntry.getDirectoryShortcut().equals("a r filename"));
-        
+
+        fileEntry = new FileEntry(new File("/absolute/relative/filename"));
+        assertTrue(fileEntry.getName().equals("filename"));
+        assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getDirectoryShortcut().equals("a r filename"));
+
         fileEntry = new FileEntry(new File("/absolute/relative/filename"), "/absolute");
         assertTrue(fileEntry.getName().equals("filename"));
         assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));

@@ -29,13 +29,11 @@ public class SearchData {
     }
 
     public String getRootFolderPath() {
-        return rootFolder.getAbsolutePath();
+        return (rootFolder == null) ? null : rootFolder.getAbsolutePath();
     }
 
     public void setRootFolder(File rootFolder) {
-        if (rootFolder != null) {
-            this.rootFolder = rootFolder;
-        }
+        this.rootFolder = rootFolder;
     }
 
     public void reload() {
@@ -44,13 +42,13 @@ public class SearchData {
         addFolder(currentRootFolder);
         Collections.sort(fileList);
     }
-    
+
     public ArrayList<FileEntry> getFileList() {
         return this.fileList;
     }
 
     private void addFolder(File folder) {
-        if (folder.isDirectory()) {
+        if (folder != null && folder.isDirectory()) {
             File files[] = folder.listFiles();
             for (int i = 0; i < files.length; i++) {
                 File file = files[i];

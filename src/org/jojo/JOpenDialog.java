@@ -200,7 +200,8 @@ public class JOpenDialog extends javax.swing.JDialog {
     private void updateResultList() {
         resultListModel.clear();
         String query = jQueryField.getText();
-        ArrayList<FileEntry> searchResults = SearchService.getInstance().search(query);
+        ArrayList<FileEntry> fileList = SearchData.getInstance().getFileList();
+        ArrayList<FileEntry> searchResults = SearchService.getInstance().search(fileList, query);
         Iterator<FileEntry> resultListIterator = searchResults.iterator();
         this.setTitle("Found " + searchResults.size());
         int resultCount = 0;

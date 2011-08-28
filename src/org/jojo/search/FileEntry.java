@@ -5,10 +5,13 @@ import java.io.File;
 public class FileEntry implements Comparable {
 
     public FileEntry(File file, String absolutePrefix) {
-        this.name = file.getName();
-        this.path = file.getAbsolutePath();
-        this.directoryShortcut = getDirectoryShortcut(file, absolutePrefix);
+        initialize(file, absolutePrefix);
     }
+
+    public FileEntry(File file) {
+        initialize(file, null);
+    }
+
     private String name;
     private String path;
     private String directoryShortcut;
@@ -31,6 +34,7 @@ public class FileEntry implements Comparable {
     }
 
     private String getDirectoryShortcut(File file, String absolutePrefix) {
+        if (absolutePrefix == null) absolutePrefix = "";
         String relativePath = file.getAbsolutePath().replace(absolutePrefix, "");
         String folders[] = relativePath.split("/");
         String result = "";
@@ -45,5 +49,11 @@ public class FileEntry implements Comparable {
             }
         }
         return result;
+    }
+
+    private void initialize(File file, String absolutePrefix) {
+        this.name = file.getName();
+        this.path = file.getAbsolutePath();
+        this.directoryShortcut = getDirectoryShortcut(file, absolutePrefix);
     }
 }
