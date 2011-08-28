@@ -60,7 +60,6 @@ public class JOpenDialog extends javax.swing.JDialog {
         });
 
         jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12)); // NOI18N
-        jResultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jResultList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jResultListKeyPressed(evt);
@@ -105,7 +104,7 @@ public class JOpenDialog extends javax.swing.JDialog {
                 }
                 break;
             case KeyEvent.VK_ENTER:
-                openSelectedFile();
+                openSelectedFiles();
                 break;
             case KeyEvent.VK_ESCAPE:
                 this.close();
@@ -175,7 +174,7 @@ public class JOpenDialog extends javax.swing.JDialog {
             @Override
             public void mouseClicked(MouseEvent me) {
                 if (me.getClickCount() == 2) {
-                    openSelectedFile();
+                    openSelectedFiles();
                 }
             }
 
@@ -230,23 +229,25 @@ public class JOpenDialog extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
 
-    private void openSelectedFile() {
+    private void openSelectedFiles() {
         try {
-            int selectedIndex = jResultList.getSelectedIndex();
-            String selectedPath = resultListModel.getPathFromElement(selectedIndex);
-            FileObject fo = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
-            DataObject newDo = DataObject.find(fo);
-            Node node = newDo.getNodeDelegate();
-            javax.swing.Action a = node.getPreferredAction();
-            if (a instanceof ContextAwareAction) {
-                a = ((ContextAwareAction) a).createContextAwareInstance(node.getLookup());
-            }
-            if (a != null) {
-                a.actionPerformed(new ActionEvent(node, ActionEvent.ACTION_PERFORMED, ""));
+            String selectedPaths[] = resultListModel.getPathsFromElements(jResultList.getSelectedIndices());
+            for (int i = 0; i < selectedPaths.length; i++) {
+                String selectedPath = selectedPaths[i];
+                FileObject fileObject = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
+                DataObject dataObject = DataObject.find(fileObject);
+                Node node = dataObject.getNodeDelegate();
+                javax.swing.Action action = node.getPreferredAction();
+                if (action instanceof ContextAwareAction) {
+                    action = ((ContextAwareAction) action).createContextAwareInstance(node.getLookup());
+                }
+                if (action != null) {
+                    action.actionPerformed(new ActionEvent(node, ActionEvent.ACTION_PERFORMED, ""));
+                }
             }
             this.close();
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
+        } catch (Exception exception) {
+            Exceptions.printStackTrace(exception);
         }
     }
 
