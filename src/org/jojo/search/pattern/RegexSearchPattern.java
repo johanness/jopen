@@ -4,9 +4,14 @@ import org.jojo.search.FileEntry;
 
 public class RegexSearchPattern extends SearchPattern {
 
+    private String query = null;
+    private String regex = null;
+
     @Override
     public boolean isMatch(FileEntry fileEntry, String query) {
-        if (fileEntry == null || !isValidQuery(query)) return false;
+        if (fileEntry == null || !isValidQuery(query)) {
+            return false;
+        }
         return (fileEntry.getPath().matches(getRegex(query)));
     }
 
@@ -16,10 +21,24 @@ public class RegexSearchPattern extends SearchPattern {
     }
 
     private String getRegex(String query) {
-        String regex = "";
-        for (int i = 1; i < query.length(); i++) {
-            regex += ".*" + query.charAt(i);
+        if (!query.equals(this.query)) {
+            query = query.toLowerCase();
+            String newRegex = ".*";
+            for (int i = 1; i < query.length(); i++) {
+                char c = query.charAt(i);
+                switch (c) {
+                    case '.':
+                        newRegex += "\\..*";
+                        break;
+                    case '/':
+                        newRegex += "\\/.*";
+                        break;
+                    default:
+                        newRegex += c+".*";
+                }
+            }
+            this.regex = newRegex;
         }
-        return regex + ".*";
+        return this.regex;
     }
 }
