@@ -18,7 +18,7 @@ public class SearchData {
         if (instance == null) {
             instance = new SearchData();
         }
-        if (instance.isRootFolderUpToDate()) {
+        if (!instance.isRootFolderUpToDate()) {
             instance.reload();
         }
         return instance;
@@ -63,6 +63,6 @@ public class SearchData {
     }
 
     private boolean isRootFolderUpToDate() {
-        return rootFolder != currentRootFolder;
+        return rootFolder == currentRootFolder;
     }
 }

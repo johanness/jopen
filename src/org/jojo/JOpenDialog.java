@@ -3,6 +3,7 @@ package org.jojo;
 import org.jojo.search.SearchData;
 import org.jojo.search.FileEntry;
 import java.awt.Event;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,19 +22,20 @@ import org.openide.nodes.Node;
 import org.openide.util.ContextAwareAction;
 import org.openide.util.Exceptions;
 
-public class JOpenDialog extends javax.swing.JDialog {
+public class JOpenDialog extends JDialog {
 
     private JOpenDefaultListModel resultListModel = new JOpenDefaultListModel();
     private int MAX_DISPLAY_RESULTS = 40;
     private int MAX_DISPLAY_FILENAME_LENGTH = 25;
+    private Frame parent = null;
 
     /** Creates new form JOpenDialog */
     public JOpenDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.parent = parent;
         initComponents();
         addCustomListeners();
-        moveToCenterOfScreen();
-        setCellRenderer();
+        setDefaultListCellRenderer(jResultList);
     }
 
     /** This method is called from within the constructor to
@@ -48,6 +50,7 @@ public class JOpenDialog extends javax.swing.JDialog {
         jQueryField = new javax.swing.JTextField();
         jResultPane = new javax.swing.JScrollPane();
         jResultList = new javax.swing.JList();
+        jSelectProjectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(JOpenDialog.class, "JOpenDialog.title")); // NOI18N
@@ -67,24 +70,36 @@ public class JOpenDialog extends javax.swing.JDialog {
         });
         jResultPane.setViewportView(jResultList);
 
+        jSelectProjectButton.setText(org.openide.util.NbBundle.getMessage(JOpenDialog.class, "JOpenDialog.jSelectProjectButton.text")); // NOI18N
+        jSelectProjectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSelectProjectButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jResultPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
-                    .addComponent(jQueryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jQueryField, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSelectProjectButton))
+                    .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jQueryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jQueryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSelectProjectButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -129,10 +144,17 @@ public class JOpenDialog extends javax.swing.JDialog {
                 break;
         }
     }//GEN-LAST:event_jQueryFieldKeyPressed
+
+private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSelectProjectButtonActionPerformed
+    jQueryField.requestFocus();
+    JSelectProjectDialog selectProjectDialog = new JSelectProjectDialog(this.parent, true);
+    selectProjectDialog.setVisible(true);
+}//GEN-LAST:event_jSelectProjectButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jQueryField;
     private javax.swing.JList jResultList;
     private javax.swing.JScrollPane jResultPane;
+    private javax.swing.JButton jSelectProjectButton;
     // End of variables declaration//GEN-END:variables
 
     private void addCustomListeners() {
@@ -221,14 +243,6 @@ public class JOpenDialog extends javax.swing.JDialog {
         jResultList.setModel(resultListModel);
     }
 
-    public void close() {
-        this.dispose();
-    }
-
-    private void moveToCenterOfScreen() {
-        this.setLocationRelativeTo(null);
-    }
-
     private void openSelectedFiles() {
         try {
             String selectedPaths[] = resultListModel.getPathsFromElements(jResultList.getSelectedIndices());
@@ -249,9 +263,5 @@ public class JOpenDialog extends javax.swing.JDialog {
         } catch (Exception exception) {
             Exceptions.printStackTrace(exception);
         }
-    }
-
-    private void setCellRenderer() {
-        jResultList.setCellRenderer(new ResultListCellRenderer());
     }
 }
