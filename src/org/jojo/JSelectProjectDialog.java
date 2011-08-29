@@ -18,6 +18,7 @@ public class JSelectProjectDialog extends JDialog {
         initComponents();
         addCustomListeners();
         setDefaultListCellRenderer(jProjectsList);
+        moveToCenterOfScreen();
         loadProjects();
     }
 

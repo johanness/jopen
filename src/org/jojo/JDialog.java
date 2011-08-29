@@ -6,7 +6,6 @@ public class JDialog extends javax.swing.JDialog {
 
     public JDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        moveToCenterOfScreen();
     }
 
     public void setDefaultListCellRenderer(JList list) {
@@ -17,7 +16,7 @@ public class JDialog extends javax.swing.JDialog {
         this.dispose();
     }
 
-    private void moveToCenterOfScreen() {
+    public void moveToCenterOfScreen() {
         this.setLocationRelativeTo(null);
     }
 }

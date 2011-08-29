@@ -36,6 +36,7 @@ public class JOpenDialog extends JDialog {
         initComponents();
         addCustomListeners();
         setDefaultListCellRenderer(jResultList);
+        moveToCenterOfScreen();
     }
 
     /** This method is called from within the constructor to
