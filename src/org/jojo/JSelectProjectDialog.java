@@ -3,6 +3,9 @@ package org.jojo;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import org.jojo.search.SearchData;
 import org.netbeans.api.project.Project;
@@ -155,13 +158,18 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private void loadProjects() {
         try {
             Project openProjects[] = OpenProjects.getDefault().openProjects().get();
+            ArrayList<String> projectList = new ArrayList<String>();
             DefaultListModel listModel = new DefaultListModel();
+            String mainProjectName = getProjectName(OpenProjects.getDefault().getMainProject());
+
             for (int i = 0; i < openProjects.length; i++) {
-                Project project = openProjects[i];
-                listModel.addElement(getProjectName(project));
+                projectList.add(getProjectName(openProjects[i]));
+            }
+            Collections.sort(projectList);
+            for (int i = 0; i < projectList.size(); i++) {
+                listModel.addElement(projectList.get(i));
             }
             jProjectsList.setModel(listModel);
-            String mainProjectName = getProjectName(OpenProjects.getDefault().getMainProject());
             jProjectsList.setSelectedIndex(listModel.indexOf(mainProjectName));
         } catch (Exception exception) {
             Exceptions.printStackTrace(exception);
