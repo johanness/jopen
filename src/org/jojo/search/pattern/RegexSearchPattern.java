@@ -4,8 +4,8 @@ import org.jojo.search.FileEntry;
 
 public class RegexSearchPattern extends SearchPattern {
 
-    private String query = null;
     private String regex = null;
+    private String query = null;
 
     @Override
     public boolean isMatch(FileEntry fileEntry, String query) {
@@ -17,14 +17,14 @@ public class RegexSearchPattern extends SearchPattern {
 
     @Override
     public boolean isValidQuery(String query) {
-        return query != null && query.startsWith("%");
+        return query != null;
     }
 
     private String getRegex(String query) {
+        query = query.toLowerCase();
         if (!query.equals(this.query)) {
-            query = query.toLowerCase();
             String newRegex = ".*";
-            for (int i = 1; i < query.length(); i++) {
+            for (int i = 0; i < query.length(); i++) {
                 char c = query.charAt(i);
                 switch (c) {
                     case '.':
@@ -34,9 +34,10 @@ public class RegexSearchPattern extends SearchPattern {
                         newRegex += "\\/.*";
                         break;
                     default:
-                        newRegex += c+".*";
+                        newRegex += c + ".*";
                 }
             }
+            this.query = query;
             this.regex = newRegex;
         }
         return this.regex;

@@ -17,27 +17,23 @@ public class RegexSearchPatternTest {
 
         assertFalse(instance.isMatch(null, null));
         assertFalse(instance.isMatch(fileEntry, null));
-        assertFalse(instance.isMatch(null, "%some"));
+        assertFalse(instance.isMatch(null, "some"));
 
-        assertFalse(instance.isMatch(fileEntry, "%another.file"));
-        assertFalse(instance.isMatch(fileEntry, "%some..file"));
-        assertFalse(instance.isMatch(fileEntry, "%ath/t/o/some"));
+        assertFalse(instance.isMatch(fileEntry, "another.file"));
+        assertFalse(instance.isMatch(fileEntry, "some..file"));
+        assertFalse(instance.isMatch(fileEntry, "ath/t/o/some"));
 
-        assertTrue(instance.isMatch(fileEntry, "%some.file"));
-        assertTrue(instance.isMatch(fileEntry, "%SOMEFILE"));
-        assertTrue(instance.isMatch(fileEntry, "%smefle"));
-        assertTrue(instance.isMatch(fileEntry, "%pathtosomefile"));
+        assertTrue(instance.isMatch(fileEntry, "some.file"));
+        assertTrue(instance.isMatch(fileEntry, "SOMEFILE"));
+        assertTrue(instance.isMatch(fileEntry, "smefle"));
+        assertTrue(instance.isMatch(fileEntry, "pathtosomefile"));
     }
 
     @Test
     public void testIsValidQuery() {
         RegexSearchPattern instance = new RegexSearchPattern();
-
         assertFalse(instance.isValidQuery(null));
-        assertFalse(instance.isValidQuery(""));
-        assertFalse(instance.isValidQuery("ends with%"));
-
-        assertTrue(instance.isValidQuery("%"));
-        assertTrue(instance.isValidQuery("%starts with"));
+        assertTrue(instance.isValidQuery(""));
+        assertTrue(instance.isValidQuery("Some String"));
     }
 }
