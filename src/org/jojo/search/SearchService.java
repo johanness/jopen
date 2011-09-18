@@ -36,12 +36,20 @@ public class SearchService {
     }
 
     public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query) {
+        if (fileList==null) return new ArrayList<FileEntry>();
+        return search(fileList, query, fileList.size());
+    }
+
+    public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query, int limit) {
+        ArrayList<FileEntry> result = new ArrayList<FileEntry>();
+        int actualLimit = limit;
         for (Iterator<SearchPattern> it = searchPatternList.iterator(); it.hasNext();) {
             SearchPattern searchPattern = it.next();
-            if (searchPattern.isValidQuery(query)) {
-                return searchPattern.search(fileList, query);
+            actualLimit = limit - result.size();
+            if (actualLimit > 0 && searchPattern.isValidQuery(query)) {
+                result.addAll(searchPattern.search(fileList, query, actualLimit));
             }
         }
-        return new ArrayList<FileEntry>();
+        return result;
     }
 }

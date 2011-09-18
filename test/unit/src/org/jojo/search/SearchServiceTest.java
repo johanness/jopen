@@ -51,4 +51,23 @@ public class SearchServiceTest {
         assertEquals(1, result.size());
         assertEquals("/somefile", result.get(0).getPath());
     }
+
+    @Test
+    public void testSearchLimitsNumberOfResultsByParam() {
+        ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
+        FileEntry fileEntry = new FileEntry(new File("/somefile"));
+        for (int i = 0; i < 100; i++) {
+            fileList.add(fileEntry);
+        }
+        SearchService searchService = SearchService.getInstance();
+
+        assertTrue(searchService.search(null, null).isEmpty());
+        assertTrue(searchService.search(fileList, null).isEmpty());
+        assertTrue(searchService.search(null, "me").isEmpty());
+
+        ArrayList<FileEntry> result = searchService.search(fileList, "me", 40);
+        assertEquals(40, result.size());
+    }
+
+
 }

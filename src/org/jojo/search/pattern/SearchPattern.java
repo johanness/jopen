@@ -10,7 +10,7 @@ public abstract class SearchPattern {
 
     public abstract boolean isValidQuery(String query);
 
-    public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query) {
+    public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query, int limit) {
         ArrayList<FileEntry> result = new ArrayList<FileEntry>();
         if (fileList == null || !isValidQuery(query)) return result;
         for (Iterator<FileEntry> it = fileList.iterator(); it.hasNext();) {
@@ -19,6 +19,7 @@ public abstract class SearchPattern {
             {
               result.add(fileEntry);
             }
+            if (limit == result.size()) return result;
         }
         return result;
     }
