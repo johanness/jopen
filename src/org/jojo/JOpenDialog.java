@@ -112,11 +112,13 @@ public class JOpenDialog extends JDialog {
             case KeyEvent.VK_UP:
                 if (jResultList.getSelectedIndex() == 0) {
                     jQueryField.requestFocus();
+                    jResultList.clearSelection();
                 }
                 break;
             case KeyEvent.VK_DOWN:
                 if (jResultList.getSelectedIndex() == resultListModel.getIndexOfLastElement()) {
                     jQueryField.requestFocus();
+                    jResultList.clearSelection();
                 }
                 break;
             case KeyEvent.VK_ENTER:
