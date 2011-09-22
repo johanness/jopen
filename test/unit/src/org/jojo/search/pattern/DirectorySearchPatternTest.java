@@ -13,7 +13,7 @@ public class DirectorySearchPatternTest {
     @Test
     public void testIsMatch() {
         DirectorySearchPattern instance = new DirectorySearchPattern();
-        FileEntry fileEntry = new FileEntry(new File("/path/to/some.file"));
+        FileEntry fileEntry = new FileEntry(new File("/path/To/Some.file"));
 
         assertFalse(instance.isMatch(null, null));
         assertFalse(instance.isMatch(fileEntry, null));

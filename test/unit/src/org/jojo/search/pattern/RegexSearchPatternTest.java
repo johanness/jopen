@@ -13,7 +13,7 @@ public class RegexSearchPatternTest {
     @Test
     public void testIsMatch() {
         RegexSearchPattern instance = new RegexSearchPattern();
-        FileEntry fileEntry = new FileEntry(new File("/path/to/some.file"));
+        FileEntry fileEntry = new FileEntry(new File("/path/To/Some.file"));
 
         assertFalse(instance.isMatch(null, null));
         assertFalse(instance.isMatch(fileEntry, null));
@@ -21,6 +21,7 @@ public class RegexSearchPatternTest {
 
         assertFalse(instance.isMatch(fileEntry, "another.file"));
         assertFalse(instance.isMatch(fileEntry, "some..file"));
+        assertFalse(instance.isMatch(fileEntry, "some,file"));
         assertFalse(instance.isMatch(fileEntry, "ath/t/o/some"));
 
         assertTrue(instance.isMatch(fileEntry, "some.file"));
