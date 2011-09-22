@@ -145,6 +145,11 @@ public class JOpenDialog extends JDialog {
             case KeyEvent.VK_ESCAPE:
                 this.close();
                 break;
+            case KeyEvent.VK_ENTER:
+                if (resultListModel.size() == 1) {
+                    jResultList.setSelectedIndex(0);
+                    openSelectedFiles();
+                }
         }
     }//GEN-LAST:event_jQueryFieldKeyPressed
 
