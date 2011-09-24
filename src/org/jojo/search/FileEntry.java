@@ -1,6 +1,8 @@
 package org.jojo.search;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class FileEntry implements Comparable {
 
@@ -31,6 +33,16 @@ public class FileEntry implements Comparable {
     @Override
     public int compareTo(Object o) {
         return this.directoryShortcut.compareTo(((FileEntry) o).directoryShortcut);
+    }
+
+    public static ArrayList<FileEntry> concatWithoutDuplications(ArrayList<FileEntry> list1, ArrayList<FileEntry> list2) {
+        for (Iterator<FileEntry> it = list2.iterator(); it.hasNext();) {
+            FileEntry fileEntry = it.next();
+            if (!list1.contains(fileEntry)) {
+                list1.add(fileEntry);
+            }
+        }
+        return list1;
     }
 
     private String getDirectoryShortcut(File file, String absolutePrefix) {

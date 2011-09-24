@@ -32,9 +32,11 @@ public class SearchServiceTest {
         searchService.clearSearchPatternList();
         assertEquals(0, searchService.getSearchPatternList().size());
 
+        searchService.addSearchPattern(new DirectorySearchPattern());
         searchService.addSearchPattern(new SimpleSearchPattern());
-        assertEquals(1, searchService.getSearchPatternList().size());
-        assertTrue(searchService.getSearchPatternList().get(0).getClass().equals(SimpleSearchPattern.class));
+        searchService.addSearchPattern(new RegexSearchPattern());
+        assertEquals(3, searchService.getSearchPatternList().size());
+        assertTrue(searchService.getSearchPatternList().get(0).getClass().equals(DirectorySearchPattern.class));
     }
 
     @Test
@@ -55,9 +57,8 @@ public class SearchServiceTest {
     @Test
     public void testSearchLimitsNumberOfResultsByParam() {
         ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
-        FileEntry fileEntry = new FileEntry(new File("/somefile"));
         for (int i = 0; i < 100; i++) {
-            fileList.add(fileEntry);
+            fileList.add(new FileEntry(new File("/somefile" + i)));
         }
         SearchService searchService = SearchService.getInstance();
 
@@ -79,5 +80,17 @@ public class SearchServiceTest {
 
         ArrayList<FileEntry> results = searchService.search(fileList, "some.file");
         assertEquals("some.file", results.get(0).getName());
+    }
+
+    @Test
+    public void testDoesNotShowDuplicateResults() {
+        ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
+        fileList.add(new FileEntry(new File("some.file")));
+
+        SearchService searchService = SearchService.getInstance();
+        assertEquals(3, searchService.getSearchPatternList().size());
+
+        ArrayList<FileEntry> results = searchService.search(fileList, "some.file", 10);
+        assertEquals(1, results.size());
     }
 }

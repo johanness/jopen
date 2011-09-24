@@ -47,7 +47,7 @@ public class SearchService {
             SearchPattern searchPattern = it.next();
             actualLimit = limit - result.size();
             if (actualLimit > 0 && searchPattern.isValidQuery(query)) {
-                result.addAll(searchPattern.search(fileList, query, actualLimit));
+                result = FileEntry.concatWithoutDuplications(result, searchPattern.search(fileList, query, actualLimit));
             }
         }
         return result;
