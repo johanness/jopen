@@ -12,8 +12,8 @@ public class SearchService {
 
     private SearchService() {
         searchPatternList.add(new DirectorySearchPattern());
-        searchPatternList.add(new RegexSearchPattern());
         searchPatternList.add(new SimpleSearchPattern());
+        searchPatternList.add(new RegexSearchPattern());
     }
 
     public static SearchService getInstance() {

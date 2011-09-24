@@ -20,8 +20,8 @@ public class SearchServiceTest {
         ArrayList<SearchPattern> actual = searchService.getSearchPatternList();
         assertEquals(3, actual.size());
         assertTrue(actual.get(0).getClass().equals(DirectorySearchPattern.class));
-        assertTrue(actual.get(1).getClass().equals(RegexSearchPattern.class));
-        assertTrue(actual.get(2).getClass().equals(SimpleSearchPattern.class));
+        assertTrue(actual.get(1).getClass().equals(SimpleSearchPattern.class));
+        assertTrue(actual.get(2).getClass().equals(RegexSearchPattern.class));
     }
 
     @Test
@@ -69,5 +69,15 @@ public class SearchServiceTest {
         assertEquals(40, result.size());
     }
 
+    @Test
+    public void testFirstUseExactSearchThenRegexSearch() {
+        ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
+        fileList.add(new FileEntry(new File("some_other.file")));
+        fileList.add(new FileEntry(new File("some.file")));
 
+        SearchService searchService = SearchService.getInstance();
+
+        ArrayList<FileEntry> results = searchService.search(fileList, "some.file");
+        assertEquals("some.file", results.get(0).getName());
+    }
 }
