@@ -232,8 +232,6 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         ArrayList<FileEntry> fileList = SearchData.getInstance().getFileList();
         ArrayList<FileEntry> searchResults = SearchService.getInstance().search(fileList, query, MAX_DISPLAY_RESULTS);
         Iterator<FileEntry> resultListIterator = searchResults.iterator();
-        this.setTitle("Found " + searchResults.size());
-        int resultCount = 0;
         while (resultListIterator.hasNext()) {
             FileEntry fileEntry = resultListIterator.next();
             String listEntry = fileEntry.getName();
@@ -246,7 +244,6 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
             String relativeFilePath = fileEntry.getPath().replace(SearchData.getInstance().getRootFolderPath(), "");
             listEntry = listEntry.concat(" (").concat(relativeFilePath).concat(")");
             resultListModel.addElement(listEntry);
-            resultCount++;
         }
         jResultList.setModel(resultListModel);
     }
