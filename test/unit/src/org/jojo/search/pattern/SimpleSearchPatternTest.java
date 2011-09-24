@@ -7,9 +7,6 @@ import static org.junit.Assert.*;
 
 public class SimpleSearchPatternTest {
 
-    public SimpleSearchPatternTest() {
-    }
-
     @Test
     public void testIsMatch() {
         SimpleSearchPattern instance = new SimpleSearchPattern();

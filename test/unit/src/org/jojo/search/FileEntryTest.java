@@ -7,9 +7,6 @@ import static org.junit.Assert.*;
 
 public class FileEntryTest {
 
-    public FileEntryTest() {
-    }
-
     @Test
     public void testGenerateFileEntryFromFile() {
         FileEntry fileEntry = new FileEntry(new File("/absolute/relative/filename"), "");
@@ -34,11 +31,11 @@ public class FileEntryTest {
         FileEntry fileB = new FileEntry(new File("b"));
         FileEntry fileC = new FileEntry(new File("c"));
 
-        ArrayList <FileEntry> list1 = new ArrayList<FileEntry>();
+        ArrayList<FileEntry> list1 = new ArrayList<FileEntry>();
         list1.add(fileA);
         list1.add(fileB);
 
-        ArrayList <FileEntry> list2 = new ArrayList<FileEntry>();
+        ArrayList<FileEntry> list2 = new ArrayList<FileEntry>();
         list2.add(fileB);
         list2.add(fileC);
 

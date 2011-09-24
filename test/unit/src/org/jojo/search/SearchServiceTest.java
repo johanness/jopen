@@ -11,9 +11,6 @@ import static org.junit.Assert.*;
 
 public class SearchServiceTest {
 
-    public SearchServiceTest() {
-    }
-
     @Test
     public void testByDefaultUsesThreeSearchPatterns() {
         SearchService searchService = SearchService.getInstance();

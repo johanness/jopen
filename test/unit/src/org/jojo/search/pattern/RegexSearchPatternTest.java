@@ -7,9 +7,6 @@ import static org.junit.Assert.*;
 
 public class RegexSearchPatternTest {
 
-    public RegexSearchPatternTest() {
-    }
-
     @Test
     public void testIsMatch() {
         RegexSearchPattern instance = new RegexSearchPattern();

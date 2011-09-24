@@ -7,9 +7,6 @@ import static org.junit.Assert.*;
 
 public class DirectorySearchPatternTest {
 
-    public DirectorySearchPatternTest() {
-    }
-
     @Test
     public void testIsMatch() {
         DirectorySearchPattern instance = new DirectorySearchPattern();

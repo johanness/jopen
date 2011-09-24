@@ -11,9 +11,6 @@ public class SearchDataTest {
     static ArrayList<File> testFiles = new ArrayList<File>();
     static ArrayList<File> testFolders = new ArrayList<File>();
 
-    public SearchDataTest() {
-    }
-
     @Test
     public void testRootFolderIsSaved() throws Exception {
         assertNull("Initially the root folder should be null", SearchData.getInstance().getRootFolder());
@@ -51,7 +48,7 @@ public class SearchDataTest {
             }
             assertTrue("could not delete " + testFolder.getAbsolutePath(), testFolder.delete());
         }
-        assertTrue("could not create dir " + temporaryDirectoryPath , testFolder.mkdir());
+        assertTrue("could not create dir " + temporaryDirectoryPath, testFolder.mkdir());
         assertTrue(testFolder.exists());
         assertTrue(testFolder.isDirectory());
         return testFolder;
