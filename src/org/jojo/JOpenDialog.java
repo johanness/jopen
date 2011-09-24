@@ -179,23 +179,6 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
             public void changedUpdate(DocumentEvent e) {
             }
         });
-        jQueryField.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_R && e.getModifiers() == Event.CTRL_MASK) {
-                    SearchData.getInstance().reload();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
         jResultList.addMouseListener(new MouseListener() {
 
             @Override
@@ -225,13 +208,18 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
 
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    Container container = e.getComponent().getParent();
-                    while (null != container && !container.getClass().equals(JOpenDialog.class)) {
-                        container = container.getParent();
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                        Container container = e.getComponent().getParent();
+                        while (null != container && !container.getClass().equals(JOpenDialog.class)) {
+                            container = container.getParent();
+                        }
+                        if (container != null) {
+                            ((JOpenDialog) container).close();
+                        }
                     }
-                    if (container != null) {
-                        ((JOpenDialog) container).close();
+                    if (e.getKeyCode() == KeyEvent.VK_R && e.getModifiers() == Event.CTRL_MASK) {
+                        SearchData.getInstance().reload();
                     }
                 }
                 return false;
