@@ -22,12 +22,11 @@ public class RegexSearchPatternTest {
         assertFalse(instance.isMatch(fileEntry, "another.file"));
         assertFalse(instance.isMatch(fileEntry, "some..file"));
         assertFalse(instance.isMatch(fileEntry, "some,file"));
-        assertFalse(instance.isMatch(fileEntry, "ath/t/o/some"));
+        assertFalse(instance.isMatch(fileEntry, "path"));
 
         assertTrue(instance.isMatch(fileEntry, "some.file"));
         assertTrue(instance.isMatch(fileEntry, "SOMEFILE"));
         assertTrue(instance.isMatch(fileEntry, "smefle"));
-        assertTrue(instance.isMatch(fileEntry, "pathtosomefile"));
     }
 
     @Test

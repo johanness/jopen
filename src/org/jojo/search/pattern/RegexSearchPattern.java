@@ -12,7 +12,7 @@ public class RegexSearchPattern extends SearchPattern {
         if (fileEntry == null || !isValidQuery(query)) {
             return false;
         }
-        return (fileEntry.getPath().toLowerCase().matches(getRegex(query)));
+        return (fileEntry.getName().toLowerCase().matches(getRegex(query)));
     }
 
     @Override
