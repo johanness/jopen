@@ -1,9 +1,12 @@
 package org.jojo;
 
+import java.awt.Container;
 import org.jojo.search.SearchData;
 import org.jojo.search.FileEntry;
 import java.awt.Event;
 import java.awt.Frame;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -63,7 +66,7 @@ public class JOpenDialog extends JDialog {
             }
         });
 
-        jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12)); // NOI18N
+        jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12));
         jResultList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jResultListKeyPressed(evt);
@@ -124,9 +127,6 @@ public class JOpenDialog extends JDialog {
             case KeyEvent.VK_ENTER:
                 openSelectedFiles();
                 break;
-            case KeyEvent.VK_ESCAPE:
-                this.close();
-                break;
         }
     }//GEN-LAST:event_jResultListKeyPressed
 
@@ -141,9 +141,6 @@ public class JOpenDialog extends JDialog {
                 jResultList.requestFocus();
                 jResultList.setSelectedIndex(resultListModel.getIndexOfLastElement());
                 jResultList.ensureIndexIsVisible(resultListModel.getIndexOfLastElement());
-                break;
-            case KeyEvent.VK_ESCAPE:
-                this.close();
                 break;
             case KeyEvent.VK_ENTER:
                 if (resultListModel.size() == 1) {
@@ -222,6 +219,22 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
 
             @Override
             public void mouseExited(MouseEvent me) {
+            }
+        });
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    Container container = e.getComponent().getParent();
+                    while (null != container && !container.getClass().equals(JOpenDialog.class)) {
+                        container = container.getParent();
+                    }
+                    if (container != null) {
+                        ((JOpenDialog) container).close();
+                    }
+                }
+                return false;
             }
         });
     }
