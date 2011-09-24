@@ -76,6 +76,18 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         case KeyEvent.VK_ESCAPE:
             close();
             break;
+        case KeyEvent.VK_UP:
+            if (jProjectsList.getSelectedIndex() == 0) {
+                jProjectsList.setSelectedIndex(jProjectsList.getModel().getSize() - 1);
+                evt.consume();
+            }
+            break;
+        case KeyEvent.VK_DOWN:
+            if (jProjectsList.getSelectedIndex() == (jProjectsList.getModel().getSize() - 1)) {
+                jProjectsList.setSelectedIndex(0);
+                evt.consume();
+            }
+            break;
     }
 }//GEN-LAST:event_jProjectsListKeyPressed
 
