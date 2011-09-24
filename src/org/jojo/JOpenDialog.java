@@ -244,9 +244,8 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         String query = jQueryField.getText();
         ArrayList<FileEntry> fileList = SearchData.getInstance().getFileList();
         ArrayList<FileEntry> searchResults = SearchService.getInstance().search(fileList, query, MAX_DISPLAY_RESULTS);
-        Iterator<FileEntry> resultListIterator = searchResults.iterator();
-        while (resultListIterator.hasNext()) {
-            FileEntry fileEntry = resultListIterator.next();
+        for (Iterator<FileEntry> it = searchResults.iterator(); it.hasNext();) {
+            FileEntry fileEntry = it.next();
             String listEntry = fileEntry.getName();
             if (listEntry.length() > MAX_DISPLAY_FILENAME_LENGTH) {
                 listEntry = listEntry.substring(0, MAX_DISPLAY_FILENAME_LENGTH);
