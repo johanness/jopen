@@ -25,3 +25,5 @@ jopen also uses a regex kind of search:
 To use the directory search enter the the initial letters of the folders
 seperated with a whitespace followed by the filename:
 "p t y fil" will find "/path/to/your/file.tmp"
+
+Use CTRL+R to reload the filestructure if new files where added to the project
