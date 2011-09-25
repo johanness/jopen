@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import javax.swing.DefaultListModel;
 import org.jojo.search.SearchData;
 import org.netbeans.api.project.Project;
