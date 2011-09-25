@@ -8,19 +8,20 @@ INSTALLATION
 
 Use the following Netbeans module file:
 /build/org-jojo.nbm
-I use it for Netbeans 6.9.1
 
 
 USAGE
 
-I recommend to set up a shortcut (i use ALT+O).
-jopen will search only in your "main project", so you will have to set one.
+I recommend to set up a shortcut (e.g. ALT+O).
+
+jopen will search only in your "main project". You can switch projects using
+the built in "Select Project" menu.
 
 Just enter the filename you are looking for to start a search.
 
-To use the directory enter the the initial letters of the folders seperated
-with a whitespace followed by the filename:
-"p t y fil" will find "/path/to/your/file.tmp"
+jopen also uses a regex kind of search:
+"smecontller.b" will also find "some_controller.rb"
 
-To use the regex search start with '%':
-"%ptyile.mp" will find "/path/to/your/file.tmp"
+To use the directory search enter the the initial letters of the folders
+seperated with a whitespace followed by the filename:
+"p t y fil" will find "/path/to/your/file.tmp"
