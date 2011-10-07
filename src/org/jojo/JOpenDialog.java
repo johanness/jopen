@@ -14,6 +14,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.jojo.helper.ProjectHelper;
@@ -281,7 +283,7 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
     }
 
     private void updateTitle() {
-        String title = "jopen";
+        String title = ResourceBundle.getBundle("org/jojo/Bundle", Locale.getDefault()).getString("JOpenDialog.title");
         String mainProjectTitle = ProjectHelper.getProjectName(OpenProjects.getDefault().getMainProject());
         if (mainProjectTitle != null) {
             title += " - " + mainProjectTitle;
