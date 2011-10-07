@@ -9,7 +9,6 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -17,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.jojo.helper.ProjectHelper;
 import org.jojo.search.SearchService;
+import org.netbeans.api.project.ui.OpenProjects;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
@@ -58,6 +59,11 @@ public class JOpenDialog extends JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(JOpenDialog.class, "JOpenDialog.title")); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jQueryField.setText(org.openide.util.NbBundle.getMessage(JOpenDialog.class, "JOpenDialog.jQueryField.text")); // NOI18N
         jQueryField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -155,6 +161,10 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
     JSelectProjectDialog selectProjectDialog = new JSelectProjectDialog(this.parent, true);
     selectProjectDialog.setVisible(true);
 }//GEN-LAST:event_jSelectProjectButtonActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        this.updateTitle();
+    }//GEN-LAST:event_formWindowActivated
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jQueryField;
     private javax.swing.JList jResultList;
@@ -268,5 +278,14 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         } catch (Exception exception) {
             Exceptions.printStackTrace(exception);
         }
+    }
+
+    private void updateTitle() {
+        String title = "jopen";
+        String mainProjectTitle = ProjectHelper.getProjectName(OpenProjects.getDefault().getMainProject());
+        if (mainProjectTitle != null) {
+            title += " - " + mainProjectTitle;
+        }
+        this.setTitle(title);
     }
 }

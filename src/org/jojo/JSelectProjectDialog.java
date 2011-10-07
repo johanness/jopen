@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.DefaultListModel;
+import org.jojo.helper.ProjectHelper;
 import org.jojo.search.SearchData;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ui.OpenProjects;
@@ -171,17 +172,19 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Project openProjects[] = OpenProjects.getDefault().openProjects().get();
             ArrayList<String> projectList = new ArrayList<String>();
             DefaultListModel listModel = new DefaultListModel();
-            String mainProjectName = getProjectName(OpenProjects.getDefault().getMainProject());
+            String mainProjectName = ProjectHelper.getProjectName(OpenProjects.getDefault().getMainProject());
 
             for (int i = 0; i < openProjects.length; i++) {
-                projectList.add(getProjectName(openProjects[i]));
+                projectList.add(ProjectHelper.getProjectName(openProjects[i]));
             }
             Collections.sort(projectList);
             for (int i = 0; i < projectList.size(); i++) {
                 listModel.addElement(projectList.get(i));
             }
             jProjectsList.setModel(listModel);
-            jProjectsList.setSelectedIndex(listModel.indexOf(mainProjectName));
+            if (mainProjectName != null) {
+                jProjectsList.setSelectedIndex(listModel.indexOf(mainProjectName));
+            }
         } catch (Exception exception) {
             Exceptions.printStackTrace(exception);
         }
@@ -194,7 +197,7 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Project openProjects[] = OpenProjects.getDefault().openProjects().get();
             for (int i = 0; i < openProjects.length; i++) {
                 Project project = openProjects[i];
-                if (getProjectName(project).equals(projectName)) {
+                if (ProjectHelper.getProjectName(project).equals(projectName)) {
                     OpenProjects.getDefault().setMainProject(project);
                     SearchData.getInstance().setRootFolder(FileUtil.toFile(project.getProjectDirectory()));
                     break;
@@ -205,9 +208,5 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         } finally {
             close();
         }
-    }
-
-    private String getProjectName(Project project) {
-        return project.getProjectDirectory().getName();
     }
 }
