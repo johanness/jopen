@@ -84,6 +84,7 @@
             </test-dependencies>
             <public-packages>
                 <package>org.jojo</package>
+                <package>org.jojo.helper</package>
                 <package>org.jojo.search</package>
                 <package>org.jojo.search.pattern</package>
             </public-packages>
