@@ -39,7 +39,8 @@ public class SearchServiceTest {
     @Test
     public void testSearchPerformsASearchUsingSearchQueryAndPassedFileList() {
         ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
-        fileList.add(new FileEntry(new File("/somefile")));
+        FileEntry testFileEntry = new FileEntry(new File("/somefile"));
+        fileList.add(testFileEntry);
         SearchService searchService = SearchService.getInstance();
 
         assertTrue(searchService.search(null, null).isEmpty());
@@ -48,7 +49,7 @@ public class SearchServiceTest {
 
         ArrayList<FileEntry> result = searchService.search(fileList, "me");
         assertEquals(1, result.size());
-        assertEquals("/somefile", result.get(0).getPath());
+        assertEquals(testFileEntry, result.get(0));
     }
 
     @Test

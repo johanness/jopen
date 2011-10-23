@@ -11,18 +11,29 @@ public class FileEntryTest {
     public void testGenerateFileEntryFromFile() {
         FileEntry fileEntry = new FileEntry(new File("/absolute/relative/filename"), "");
         assertTrue(fileEntry.getName().equals("filename"));
-        assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getAbsolutePath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getRelativePath().equals("/absolute/relative/filename"));
         assertTrue(fileEntry.getDirectoryShortcut().equals("a r filename"));
 
         fileEntry = new FileEntry(new File("/absolute/relative/filename"));
         assertTrue(fileEntry.getName().equals("filename"));
-        assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getAbsolutePath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getRelativePath().equals("/absolute/relative/filename"));
         assertTrue(fileEntry.getDirectoryShortcut().equals("a r filename"));
 
         fileEntry = new FileEntry(new File("/absolute/relative/filename"), "/absolute");
         assertTrue(fileEntry.getName().equals("filename"));
-        assertTrue(fileEntry.getPath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getAbsolutePath().equals("/absolute/relative/filename"));
+        assertTrue(fileEntry.getRelativePath().equals("/relative/filename"));
         assertTrue(fileEntry.getDirectoryShortcut().equals("r filename"));
+    }
+
+    public void testCompareTo() {
+        FileEntry fileEntry = new FileEntry(new File("/some/filename"));
+        FileEntry sameFileEntry = new FileEntry(new File("/some/filename"));
+        FileEntry anotherFileEntry = new FileEntry(new File("/SOME/FILENAME"));
+        assertEquals(fileEntry, sameFileEntry);
+        assertNotSame(fileEntry, anotherFileEntry);
     }
 
     @Test

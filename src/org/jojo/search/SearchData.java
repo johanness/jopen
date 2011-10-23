@@ -8,8 +8,7 @@ public class SearchData {
 
     private static SearchData instance = null;
     private ArrayList<FileEntry> fileList = new ArrayList<FileEntry>();
-    private File rootFolder = null;
-    private File currentRootFolder = null;
+    private ArrayList<File> sourceFolders = new ArrayList<File>();
 
     private SearchData() {
     }
@@ -18,28 +17,24 @@ public class SearchData {
         if (instance == null) {
             instance = new SearchData();
         }
-        if (!instance.isRootFolderUpToDate()) {
-            instance.reload();
-        }
         return instance;
     }
 
-    public File getRootFolder() {
-        return rootFolder;
+    public ArrayList<File> getSourceFolders() {
+        return sourceFolders;
     }
 
-    public String getRootFolderPath() {
-        return (rootFolder == null) ? null : rootFolder.getAbsolutePath();
-    }
-
-    public void setRootFolder(File rootFolder) {
-        this.rootFolder = rootFolder;
+    public void setSourceFolders(ArrayList<File> sourceFolders) {
+        this.sourceFolders = sourceFolders;
+        reload();
     }
 
     public void reload() {
         fileList.clear();
-        currentRootFolder = rootFolder;
-        addFolder(currentRootFolder);
+        for (int i = 0; i < sourceFolders.size(); i++) {
+            File sourceFolder = sourceFolders.get(i);
+            addFolder(sourceFolder, sourceFolder.getAbsolutePath());
+        }
         Collections.sort(fileList);
     }
 
@@ -47,22 +42,18 @@ public class SearchData {
         return this.fileList;
     }
 
-    private void addFolder(File folder) {
+    private void addFolder(File folder, String absolutePrefix) {
         if (folder != null && folder.isDirectory()) {
             File files[] = folder.listFiles();
             for (int i = 0; i < files.length; i++) {
                 File file = files[i];
                 if (file.isFile()) {
-                    fileList.add(new FileEntry(file, getRootFolderPath()));
+                    fileList.add(new FileEntry(file, absolutePrefix));
                 }
                 if (file.isDirectory()) {
-                    addFolder(file);
+                    addFolder(file, absolutePrefix);
                 }
             }
         }
-    }
-
-    private boolean isRootFolderUpToDate() {
-        return rootFolder == currentRootFolder;
     }
 }

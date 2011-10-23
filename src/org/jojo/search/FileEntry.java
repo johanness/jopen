@@ -15,15 +15,20 @@ public class FileEntry implements Comparable {
     }
 
     private String name;
-    private String path;
+    private String absolutePath;
+    private String relativePath;
     private String directoryShortcut;
 
     public String getName() {
         return name;
     }
 
-    public String getPath() {
-        return path;
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    public String getAbsolutePath() {
+        return absolutePath;
     }
 
     public String getDirectoryShortcut() {
@@ -32,7 +37,7 @@ public class FileEntry implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return this.directoryShortcut.compareTo(((FileEntry) o).directoryShortcut);
+        return this.absolutePath.compareTo(((FileEntry) o).absolutePath);
     }
 
     public static ArrayList<FileEntry> concatWithoutDuplications(ArrayList<FileEntry> list1, ArrayList<FileEntry> list2) {
@@ -45,9 +50,7 @@ public class FileEntry implements Comparable {
         return list1;
     }
 
-    private String getDirectoryShortcut(File file, String absolutePrefix) {
-        if (absolutePrefix == null) absolutePrefix = "";
-        String relativePath = file.getAbsolutePath().replace(absolutePrefix, "");
+    private String getDirectoryShortcut(String relativePath) {
         String folders[] = relativePath.split("/");
         String result = "";
         for (int i = 1; i < folders.length; i++) {
@@ -64,8 +67,10 @@ public class FileEntry implements Comparable {
     }
 
     private void initialize(File file, String absolutePrefix) {
+        if (absolutePrefix == null) absolutePrefix = "";
         this.name = file.getName();
-        this.path = file.getAbsolutePath();
-        this.directoryShortcut = getDirectoryShortcut(file, absolutePrefix);
+        this.absolutePath = file.getAbsolutePath();
+        this.relativePath = file.getAbsolutePath().replace(absolutePrefix, "");
+        this.directoryShortcut = getDirectoryShortcut(this.relativePath);
     }
 }

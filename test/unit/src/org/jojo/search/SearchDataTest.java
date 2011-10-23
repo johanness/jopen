@@ -8,18 +8,15 @@ import static org.junit.Assert.*;
 public class SearchDataTest {
 
     static String temporaryDirectoryPath = "/tmp/jopen";
-    static ArrayList<File> testFiles = new ArrayList<File>();
-    static ArrayList<File> testFolders = new ArrayList<File>();
 
     @Test
-    public void testRootFolderIsSaved() throws Exception {
-        assertNull("Initially the root folder should be null", SearchData.getInstance().getRootFolder());
-        assertNull("Initially the root folder path should be null", SearchData.getInstance().getRootFolderPath());
+    public void testSourceFoldersAreSaved() throws Exception {
+        assertTrue("Initially the root folder should be empty", SearchData.getInstance().getSourceFolders().isEmpty());
 
-        File testFile = new File("/path/to/testFile");
-        SearchData.getInstance().setRootFolder(testFile);
-        assertEquals(testFile, SearchData.getInstance().getRootFolder());
-        assertEquals(testFile.getAbsolutePath(), SearchData.getInstance().getRootFolderPath());
+        ArrayList<File> testFiles = new ArrayList<File>();
+        testFiles.add(new File("/path/to/testFile"));
+        SearchData.getInstance().setSourceFolders(testFiles);
+        assertEquals(testFiles, SearchData.getInstance().getSourceFolders());
     }
 
     @Test

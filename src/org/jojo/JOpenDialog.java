@@ -253,8 +253,7 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
             while (listEntry.length() < MAX_DISPLAY_FILENAME_LENGTH) {
                 listEntry = listEntry.concat(" ");
             }
-            String relativeFilePath = fileEntry.getPath().replace(SearchData.getInstance().getRootFolderPath(), "");
-            listEntry = listEntry.concat(" (").concat(relativeFilePath).concat(")");
+            listEntry = listEntry.concat(" (").concat(fileEntry.getAbsolutePath()).concat(")");
             resultListModel.addElement(listEntry);
         }
         jResultList.setModel(resultListModel);

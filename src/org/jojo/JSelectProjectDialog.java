@@ -199,7 +199,7 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Project project = openProjects[i];
                 if (ProjectHelper.getProjectName(project).equals(projectName)) {
                     OpenProjects.getDefault().setMainProject(project);
-                    SearchData.getInstance().setRootFolder(FileUtil.toFile(project.getProjectDirectory()));
+                    SearchData.getInstance().setSourceFolders(ProjectHelper.getSourceFolders(project));
                     break;
                 }
             }
