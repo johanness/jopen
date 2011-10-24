@@ -74,7 +74,12 @@ public class JOpenDialog extends JDialog {
             }
         });
 
-        jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12));
+        jResultList.setFont(new java.awt.Font("DejaVu Sans Mono", 0, 12)); // NOI18N
+        jResultList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jResultListValueChanged(evt);
+            }
+        });
         jResultList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jResultListKeyPressed(evt);
@@ -97,7 +102,7 @@ public class JOpenDialog extends JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jQueryField, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                        .addComponent(jQueryField, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSelectProjectButton))
                     .addComponent(jResultPane, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
@@ -167,6 +172,11 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         this.updateTitle();
     }//GEN-LAST:event_formWindowActivated
+
+    private void jResultListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jResultListValueChanged
+        this.updateTitle();
+    }//GEN-LAST:event_jResultListValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jQueryField;
     private javax.swing.JList jResultList;
@@ -278,6 +288,9 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         String mainProjectTitle = ProjectHelper.getProjectName(OpenProjects.getDefault().getMainProject());
         if (mainProjectTitle != null) {
             title += " - " + mainProjectTitle;
+        }
+        if (jResultList.getSelectedIndices().length == 1) {
+            title += " - " + ((FileEntry)jResultList.getSelectedValue()).getAbsolutePath();
         }
         this.setTitle(title);
     }
