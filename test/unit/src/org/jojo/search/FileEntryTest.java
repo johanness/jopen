@@ -28,12 +28,23 @@ public class FileEntryTest {
         assertTrue(fileEntry.getDirectoryShortcut().equals("r filename"));
     }
 
+    @Test
     public void testCompareTo() {
         FileEntry fileEntry = new FileEntry(new File("/some/filename"));
         FileEntry sameFileEntry = new FileEntry(new File("/some/filename"));
         FileEntry anotherFileEntry = new FileEntry(new File("/SOME/FILENAME"));
-        assertEquals(fileEntry, sameFileEntry);
-        assertNotSame(fileEntry, anotherFileEntry);
+        assertEquals(0, fileEntry.compareTo(sameFileEntry));
+        assertNotSame(0, fileEntry.compareTo(anotherFileEntry));
+    }
+
+    @Test
+    public void testToStringFormatsNameAndRelativePath() {
+        FileEntry fileEntry1 = new FileEntry(new File("/absolute/relative/filename"), "/absolute");
+        FileEntry fileEntry2 = new FileEntry(new File("/absolute/relative/a_very_very_very_very_long_filename"), "/absolute");
+        FileEntry fileEntry3 = new FileEntry(new File("/absolute/a_very_very_very_very_long_relative/filename"), "/absolute");
+        assertEquals("filename                  (/relative/filename)", fileEntry1.toString());
+        assertEquals("a_very_very_very_very_lon (/relative/a_very_very_very_very_long_filename)", fileEntry2.toString());
+        assertEquals("filename                  (/a_very_very_very_very_long_relative/filename)", fileEntry3.toString());
     }
 
     @Test

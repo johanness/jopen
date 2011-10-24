@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.event.DocumentEvent;
@@ -32,7 +33,6 @@ public class JOpenDialog extends JDialog {
 
     private JOpenDefaultListModel resultListModel = new JOpenDefaultListModel();
     private int MAX_DISPLAY_RESULTS = 40;
-    private int MAX_DISPLAY_FILENAME_LENGTH = 25;
     private Frame parent = null;
 
     /** Creates new form JOpenDialog */
@@ -246,24 +246,16 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         ArrayList<FileEntry> searchResults = SearchService.getInstance().search(fileList, query, MAX_DISPLAY_RESULTS);
         for (Iterator<FileEntry> it = searchResults.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
-            String listEntry = fileEntry.getName();
-            if (listEntry.length() > MAX_DISPLAY_FILENAME_LENGTH) {
-                listEntry = listEntry.substring(0, MAX_DISPLAY_FILENAME_LENGTH);
-            }
-            while (listEntry.length() < MAX_DISPLAY_FILENAME_LENGTH) {
-                listEntry = listEntry.concat(" ");
-            }
-            listEntry = listEntry.concat(" (").concat(fileEntry.getAbsolutePath()).concat(")");
-            resultListModel.addElement(listEntry);
+            resultListModel.addElement(fileEntry);
         }
         jResultList.setModel(resultListModel);
     }
 
     private void openSelectedFiles() {
         try {
-            String selectedPaths[] = resultListModel.getPathsFromElements(jResultList.getSelectedIndices());
-            for (int i = 0; i < selectedPaths.length; i++) {
-                String selectedPath = selectedPaths[i];
+            List selectedValues = jResultList.getSelectedValuesList();
+            for (int i = 0; i < selectedValues.size(); i++) {
+                String selectedPath = ((FileEntry) selectedValues.get(i)).getAbsolutePath();
                 FileObject fileObject = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
                 DataObject dataObject = DataObject.find(fileObject);
                 Node node = dataObject.getNodeDelegate();

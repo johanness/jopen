@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 public class FileEntry implements Comparable {
 
+    private int MAX_DISPLAY_FILENAME_LENGTH = 25;
+
     public FileEntry(File file, String absolutePrefix) {
         initialize(file, absolutePrefix);
     }
@@ -13,7 +15,6 @@ public class FileEntry implements Comparable {
     public FileEntry(File file) {
         initialize(file, null);
     }
-
     private String name;
     private String absolutePath;
     private String relativePath;
@@ -67,10 +68,25 @@ public class FileEntry implements Comparable {
     }
 
     private void initialize(File file, String absolutePrefix) {
-        if (absolutePrefix == null) absolutePrefix = "";
+        if (absolutePrefix == null) {
+            absolutePrefix = "";
+        }
         this.name = file.getName();
         this.absolutePath = file.getAbsolutePath();
         this.relativePath = file.getAbsolutePath().replace(absolutePrefix, "");
         this.directoryShortcut = getDirectoryShortcut(this.relativePath);
+    }
+
+    @Override
+    public String toString() {
+        String result = getName();
+        if (result.length() > MAX_DISPLAY_FILENAME_LENGTH) {
+            result = result.substring(0, MAX_DISPLAY_FILENAME_LENGTH);
+        }
+        while (result.length() < MAX_DISPLAY_FILENAME_LENGTH) {
+            result = result.concat(" ");
+        }
+        result = result.concat(" (").concat(getRelativePath()).concat(")");
+        return result;
     }
 }
