@@ -2,11 +2,13 @@ package org.jojo.search.pattern;
 
 import org.jojo.search.FileEntry;
 
-public class SimpleSearchPattern extends SearchPattern{
+public class SimpleSearchPattern extends SearchPattern {
 
     @Override
     public boolean isMatch(FileEntry fileEntry, String query) {
-        if (fileEntry == null || !isValidQuery(query)) return false;
+        if (fileEntry == null || !isValidQuery(query)) {
+            return false;
+        }
         return (fileEntry.getName().toLowerCase().contains(query.toLowerCase()));
     }
 

@@ -12,14 +12,17 @@ public abstract class SearchPattern {
 
     public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query, int limit) {
         ArrayList<FileEntry> result = new ArrayList<FileEntry>();
-        if (fileList == null || !isValidQuery(query)) return result;
+        if (fileList == null || !isValidQuery(query)) {
+            return result;
+        }
         for (Iterator<FileEntry> it = fileList.iterator(); it.hasNext();) {
             FileEntry fileEntry = it.next();
-            if (isMatch(fileEntry, query))
-            {
-              result.add(fileEntry);
+            if (isMatch(fileEntry, query)) {
+                result.add(fileEntry);
             }
-            if (limit == result.size()) return result;
+            if (limit == result.size()) {
+                return result;
+            }
         }
         return result;
     }

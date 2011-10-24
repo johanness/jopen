@@ -7,7 +7,6 @@ import org.jojo.search.pattern.*;
 public class SearchService {
 
     private static SearchService instance = null;
-
     private ArrayList<SearchPattern> searchPatternList = new ArrayList<SearchPattern>();
 
     private SearchService() {
@@ -36,7 +35,9 @@ public class SearchService {
     }
 
     public ArrayList<FileEntry> search(ArrayList<FileEntry> fileList, String query) {
-        if (fileList==null) return new ArrayList<FileEntry>();
+        if (fileList == null) {
+            return new ArrayList<FileEntry>();
+        }
         return search(fileList, query, fileList.size());
     }
 

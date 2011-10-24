@@ -19,7 +19,9 @@ public class ProjectHelper {
 
     public static ArrayList<File> getSourceFolders(Project project) {
         ArrayList<File> result = new ArrayList<File>();
-        if (project == null) return result;
+        if (project == null) {
+            return result;
+        }
         Sources sources = ProjectUtils.getSources(project);
         SourceGroup sourceGroups[] = sources.getSourceGroups(Sources.TYPE_GENERIC);
         for (int i = 0; i < sourceGroups.length; i++) {

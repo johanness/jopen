@@ -10,7 +10,6 @@ import org.jojo.helper.ProjectHelper;
 import org.jojo.search.SearchData;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ui.OpenProjects;
-import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 
 public class JSelectProjectDialog extends JDialog {
@@ -121,6 +120,7 @@ private void jProjectsListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 JSelectProjectDialog dialog = new JSelectProjectDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
