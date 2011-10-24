@@ -33,6 +33,12 @@ public class RegexSearchPattern extends SearchPattern {
                     case '/':
                         newRegex += "\\/.*";
                         break;
+                    case '$':
+                        if (newRegex.endsWith(".*")) {
+                            newRegex = newRegex.substring(0, newRegex.length() - 2);
+                        }
+                        newRegex += "$";
+                        break;
                     default:
                         newRegex += c + ".*";
                 }

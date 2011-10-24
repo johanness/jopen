@@ -27,6 +27,15 @@ public class RegexSearchPatternTest {
     }
 
     @Test
+    public void testIsMatchSupportsEOLCharacter() {
+        RegexSearchPattern instance = new RegexSearchPattern();
+        FileEntry fileEntry = new FileEntry(new File("/path/To/Some.file.extension"));
+
+        assertFalse(instance.isMatch(fileEntry, "file$"));
+        assertTrue(instance.isMatch(fileEntry, "extension$"));
+    }
+
+    @Test
     public void testIsValidQuery() {
         RegexSearchPattern instance = new RegexSearchPattern();
         assertFalse(instance.isValidQuery(null));
