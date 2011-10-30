@@ -36,7 +36,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSelectProjectButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jResultPane" alignment="0" pref="794" max="32767" attributes="0"/>
+                  <Component id="jResultPane" alignment="0" pref="804" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

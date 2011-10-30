@@ -14,12 +14,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.jojo.helper.ProjectHelper;
+import org.jojo.helper.ResourceBundleHelper;
 import org.jojo.search.SearchService;
 import org.netbeans.api.project.ui.OpenProjects;
 import org.openide.filesystems.FileObject;
@@ -170,11 +168,11 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
 }//GEN-LAST:event_jSelectProjectButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        this.updateTitle();
+        this.updateTitle(null);
     }//GEN-LAST:event_formWindowActivated
 
     private void jResultListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jResultListValueChanged
-        this.updateTitle();
+        this.updateTitle(null);
     }//GEN-LAST:event_jResultListValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -241,7 +239,9 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
                         }
                     }
                     if (e.getKeyCode() == KeyEvent.VK_R && e.getModifiers() == Event.CTRL_MASK) {
+                        updateTitle(ResourceBundleHelper.getString("JOpenDialog.reloading"));
                         SearchData.getInstance().reload();
+                        updateTitle(null);
                     }
                 }
                 return false;
@@ -263,9 +263,9 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
 
     private void openSelectedFiles() {
         try {
-            List selectedValues = jResultList.getSelectedValuesList();
-            for (int i = 0; i < selectedValues.size(); i++) {
-                String selectedPath = ((FileEntry) selectedValues.get(i)).getAbsolutePath();
+            Object[] selectedValues = jResultList.getSelectedValues();
+            for (int i = 0; i < selectedValues.length; i++) {
+                String selectedPath = ((FileEntry) selectedValues[i]).getAbsolutePath();
                 FileObject fileObject = FileUtil.toFileObject(new File(selectedPath).getAbsoluteFile());
                 DataObject dataObject = DataObject.find(fileObject);
                 Node node = dataObject.getNodeDelegate();
@@ -283,14 +283,17 @@ private void jSelectProjectButtonActionPerformed(java.awt.event.ActionEvent evt)
         }
     }
 
-    private void updateTitle() {
-        String title = ResourceBundle.getBundle("org/jojo/Bundle", Locale.getDefault()).getString("JOpenDialog.title");
+    private void updateTitle(String text) {
+        String title = ResourceBundleHelper.getString("JOpenDialog.title");
         String mainProjectTitle = ProjectHelper.getProjectName(OpenProjects.getDefault().getMainProject());
         if (mainProjectTitle != null) {
-            title += " - " + mainProjectTitle;
+            title = mainProjectTitle;
         }
         if (jResultList.getSelectedIndices().length == 1) {
             title += " - " + ((FileEntry)jResultList.getSelectedValue()).getAbsolutePath();
+        }
+        if (text != null) {
+            title = text;
         }
         this.setTitle(title);
     }
