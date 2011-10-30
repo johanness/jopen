@@ -22,6 +22,9 @@ Just enter the filename you are looking for to start a search.
 jopen also uses a regex kind of search:
 "smecontller.b" will also find "some_controller.rb"
 
+Match file extensions with '$':
+".txt$" will not find "file.txt.bak"
+
 To use the directory search enter the the initial letters of the folders
 seperated with a whitespace followed by the filename:
 "p t y fil" will find "/path/to/your/file.tmp"
