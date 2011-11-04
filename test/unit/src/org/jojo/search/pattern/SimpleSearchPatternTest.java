@@ -1,33 +1,37 @@
 package org.jojo.search.pattern;
 
+import org.jojo.helper.SearchPatternTest;
 import java.io.File;
 import org.jojo.search.FileEntry;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class SimpleSearchPatternTest {
+public class SimpleSearchPatternTest extends SearchPatternTest {
 
     @Test
     public void testIsMatch() {
-        SimpleSearchPattern instance = new SimpleSearchPattern();
         FileEntry fileEntry = new FileEntry(new File("/path/To/Some.file"));
 
-        assertFalse(instance.isMatch(null, null));
-        assertFalse(instance.isMatch(fileEntry, null));
-        assertFalse(instance.isMatch(null, "some.file"));
-        assertFalse(instance.isMatch(fileEntry, "another.file"));
-        assertFalse(instance.isMatch(fileEntry, "path"));
+        assertFalse(isMatch(null, null));
+        assertFalse(isMatch(fileEntry, null));
+        assertFalse(isMatch(null, "some.file"));
+        assertFalse(isMatch(fileEntry, "another.file"));
+        assertFalse(isMatch(fileEntry, "path"));
 
-        assertTrue(instance.isMatch(fileEntry, "ome.fil"));
-        assertTrue(instance.isMatch(fileEntry, "some"));
-        assertTrue(instance.isMatch(fileEntry, "SomE.FilE"));
+        assertTrue(isMatch(fileEntry, "ome.fil"));
+        assertTrue(isMatch(fileEntry, "some"));
+        assertTrue(isMatch(fileEntry, "SomE.FilE"));
     }
 
     @Test
     public void testIsValidQuery() {
-        SimpleSearchPattern instance = new SimpleSearchPattern();
-        assertFalse(instance.isValidQuery(null));
-        assertTrue(instance.isValidQuery(""));
-        assertTrue(instance.isValidQuery("Some String"));
+        assertFalse(isValidQuery(null));
+        assertTrue(isValidQuery(""));
+        assertTrue(isValidQuery("Some String"));
+    }
+
+    @Override
+    public SearchPattern getSearchPattern() {
+        return new SimpleSearchPattern();
     }
 }

@@ -1,40 +1,43 @@
 package org.jojo.search.pattern;
 
+import org.jojo.helper.SearchPatternTest;
 import org.jojo.search.FileEntry;
 import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class DirectorySearchPatternTest {
+public class DirectorySearchPatternTest extends SearchPatternTest {
 
     @Test
     public void testIsMatch() {
-        DirectorySearchPattern instance = new DirectorySearchPattern();
         FileEntry fileEntry = new FileEntry(new File("/path/To/Some.file"));
 
-        assertFalse(instance.isMatch(null, null));
-        assertFalse(instance.isMatch(fileEntry, null));
-        assertFalse(instance.isMatch(null, "p t so"));
+        assertFalse(isMatch(null, null));
+        assertFalse(isMatch(fileEntry, null));
+        assertFalse(isMatch(null, "p t so"));
 
-        assertFalse(instance.isMatch(fileEntry, "some.file"));
-        assertFalse(instance.isMatch(fileEntry, "t some.file"));
+        assertFalse(isMatch(fileEntry, "some.file"));
+        assertFalse(isMatch(fileEntry, "t some.file"));
 
-        assertTrue(instance.isMatch(fileEntry, "p "));
-        assertTrue(instance.isMatch(fileEntry, "p t"));
-        assertTrue(instance.isMatch(fileEntry, "p t s"));
-        assertTrue(instance.isMatch(fileEntry, "p t some.file"));
-        assertTrue(instance.isMatch(fileEntry, "P T SomE.FilE"));
+        assertTrue(isMatch(fileEntry, "p "));
+        assertTrue(isMatch(fileEntry, "p t"));
+        assertTrue(isMatch(fileEntry, "p t s"));
+        assertTrue(isMatch(fileEntry, "p t some.file"));
+        assertTrue(isMatch(fileEntry, "P T SomE.FilE"));
     }
 
     @Test
     public void testIsValidQuery() {
-        DirectorySearchPattern instance = new DirectorySearchPattern();
+        assertFalse(isValidQuery(null));
+        assertFalse(isValidQuery(""));
+        assertFalse(isValidQuery("string-without-spaces"));
 
-        assertFalse(instance.isValidQuery(null));
-        assertFalse(instance.isValidQuery(""));
-        assertFalse(instance.isValidQuery("string-without-spaces"));
+        assertTrue(isValidQuery(" "));
+        assertTrue(isValidQuery("string with spaces"));
+    }
 
-        assertTrue(instance.isValidQuery(" "));
-        assertTrue(instance.isValidQuery("string with spaces"));
+    @Override
+    public SearchPattern getSearchPattern() {
+        return new DirectorySearchPattern();
     }
 }
