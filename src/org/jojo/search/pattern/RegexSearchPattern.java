@@ -28,10 +28,20 @@ public class RegexSearchPattern extends SearchPattern {
                 char c = query.charAt(i);
                 switch (c) {
                     case '.':
-                        newRegex += "\\..*";
-                        break;
-                    case '/':
-                        newRegex += "\\/.*";
+                    case '(':
+                    case ')':
+                    case '^':
+                    case '\\':
+                    case '|':
+                    case '"':
+                    case '+':
+                    case '[':
+                    case ']':
+                    case '{':
+                    case '}':
+                    case '?':
+                    case '*':
+                        newRegex += "\\" + c + ".*";
                         break;
                     case '$':
                         if (newRegex.endsWith(".*")) {
